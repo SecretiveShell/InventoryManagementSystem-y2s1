@@ -1,0 +1,77 @@
+@startuml
+left to right direction
+
+package public{
+actor Guest
+actor Customer
+}
+
+package employee {
+actor Clerk
+actor Manager
+}
+
+Manager -right-|> Clerk
+
+' add seperate login actions to declutter the diagram
+(log in) as LoginInvoice
+(log in) as LoginManageInventory
+(log in) as LoginAccountManagement
+
+(Manage cart) as ManageCart
+(register order for processing) as Checkout
+
+rectangle ManageInventory {
+    (view stock) as ViewStock
+    (update stock) as UpdateStock
+    (add new book) as AddNewbook
+    (view item history) as ViewItemHistory
+    (deprecate item listing) as DeprecateItem
+}
+
+rectangle AccountManagement{
+    (create Clerk account) as CreateClerkAccount
+    (reset password) as ResetPassword
+    (Sign up) as CreateOwnAccount
+}
+
+rectangle Invoicing {
+    (View VAT invoice for order) as ViewInvoice
+    (edit invoice) as EditInvoice
+    (create invoice) as CreateInvoice
+}
+
+ViewStock .up.> LoginManageInventory
+UpdateStock .up.> LoginManageInventory
+AddNewbook .up.> LoginManageInventory
+ViewItemHistory .up.> LoginManageInventory
+DeprecateItem .up.> LoginManageInventory
+
+ManageCart ..> LoginInvoice
+Checkout ..> LoginInvoice
+ViewInvoice ..> LoginInvoice
+CreateInvoice ..> LoginInvoice
+EditInvoice ..> LoginInvoice
+
+CreateClerkAccount ..> LoginAccountManagement
+
+Guest -up-> CreateOwnAccount
+
+Customer -up-> ResetPassword
+Customer -right-> ManageCart
+Customer --> Checkout
+Customer -up-> ViewInvoice
+
+Clerk -up-> CreateInvoice
+Clerk -up-> ViewStock
+Clerk -up-> UpdateStock
+Clerk -up-> AddNewbook
+Clerk -up-> ViewItemHistory
+Clerk --> ResetPassword
+
+
+Manager --> CreateClerkAccount
+Manager -up-> DeprecateItem
+Manager --> EditInvoice
+
+@enduml
