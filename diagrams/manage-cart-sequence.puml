@@ -1,0 +1,107 @@
+@startuml
+
+(*) --> "{{
+salt
+title login
+{
+{* Home | Browse | Login }
+--
+{
+    <&person>Login  | "Username"
+    <&key>Password  | "********"
+    [Cancel]        | [   Ok   ]
+}
+}
+}}" as login
+
+login --> "{{
+salt
+{
+title browse
+{* Browse | Cart | Log Out }
+--
+{#
+    Book | ISBN | Price | STOCK | .                    | .
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart] | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart] | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart] | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart] | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart] | [<&wrench>edit stock]
+}
+}
+}}" as browse_books
+
+(*) --> browse_books
+
+
+browse_books --> "{{
+salt
+{
+title cart
+{* Browse | Cart | Log Out }
+--
+{#
+    Book  | ISBN | Price |                      QTY                     | .
+    xyz   | xyz  | £10   | {[<&chevron-left>] | 1 | [<&chevron-right>]} | [Remove]
+    xyz   | xyz  | £10   | {[<&chevron-left>] | 2 | [<&chevron-right>]} | [Remove]
+}
+{ [Remove from stock] | [Create Invoice]}
+}
+}}" as cart
+
+cart --> (*)
+
+cart -left-> "{{
+salt
+{
+title browse with items in cart
+{* Browse | Cart | Log Out }
+--
+{#
+    Book | ISBN | Price | STOCK | .                                            | .
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart]                         | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | {[<&chevron-left>] | 1 | [<&chevron-right>]} | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart]                         | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | {[<&chevron-left>] | 2 | [<&chevron-right>]} | [<&wrench>edit stock]
+    xyz  | xyz  | £10   | 10    | [<&cart>Add to cart]                         | [<&wrench>edit stock]
+}
+}
+}}" as browse_books_with_items_in_cart
+
+browse_books_with_items_in_cart -right-> cart
+
+cart -down-> "{{
+salt
+{
+title invoice
+{* Browse | Cart | Log Out }
+--
+{+
+{ <b>Invoice }
+{ <b>Date: | 15 March 2050 }
+--
+{
+    <b>Billed to | <b>From
+    addr line 1  | addr line 1
+    addr line 2  | addr line 2
+    postcode     | postcode
+}
+--
+{#
+    Book  | ISBN |  QTY | Price | Total Price 
+    xyz   | xyz  |  1   | £10   | £10
+    xyz   | xyz  |  2   | £10   | £20
+    .     | *    |  *   | Total | £30
+}
+{
+    <b>Payment Method | Cash
+    <b>Note: | n/a
+}
+}
+{ [Print]}
+}
+}}" as invoice
+
+invoice --> (*)
+
+@enduml
