@@ -1,5 +1,6 @@
-User stories
-Guest
+# User stories
+
+## Guest
 
 As a Guest, I want to create an account so that I can access features such as browsing books, adding them to my cart, and viewing special offers
 
@@ -9,7 +10,8 @@ Acceptance Criteria:
 - Guests must provide a valid email address, password, and other required information.
 - A confirmation email is sent upon successful registration.
 
-Customer
+## Customer
+
 As a Customer, I want to log in to my account so that I can access features such as viewing my order history, managing my cart, and updating my account details.
 
 Acceptance Criteria:
@@ -62,7 +64,7 @@ Acceptance Criteria:
 - The invoice must include VAT details.
 - Customers can download or print the invoice for their records.
 
-Clerk
+## Clerk
 
 As a Clerk, I want to create an invoice so that I can charge commercial customers
 
@@ -103,7 +105,7 @@ Acceptance Criteria:
 - The history must include the date of each sale and the quantity sold.
 - Clerks can use this information to decide when to reorder stock.
 
-Manager
+## Manager
 
 As a Manager, I want to create a new clerk account so that I can hire new employees
 
@@ -129,72 +131,151 @@ Acceptance Criteria:
 - Refund details must be clearly recorded in the invoice.
 - A confirmation message is displayed after a successful invoice edit.
 
+# User Profiles
+
+<table>
+    <tr>
+        <td colspan="2"><strong>John Doe</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        - Age: 25<br>
+        - Occupation: School Teacher<br>
+        - Location: Sheffield, UK<br>
+        - Disability: None<br>
+        - Quote: “I love to read books and experience immersive stories”<br>
+        </td>
+    </tr>
+    <tr>
+        <td>Background</td>
+        <td>
+            John likes to read books in his spare time, as well as the occasional book required for teaching students.
+        </td>
+    </tr>
+    <tr>
+        <td>Goals</td>
+        <td>
+            - Buy new books for personal consumption<br>
+            - Refer students to the platform to buy books for the course
+        </td>
+    </tr>
+    <tr>
+        <td>Frustrations</td>
+        <td>
+            - Websites are slow to use
+        </td>
+    </tr>
+    <tr>
+        <td>Technology</td>
+        <td>
+            - Laptop<br>
+            - Phone
+        </td>
+    </tr>
+    <tr>
+        <td>Scenario</td>
+        <td>
+            John logs into his account to search for a new book to read. He wants to browse books based on the genre he is interested in and look for similar titles to books he previously enjoyed reading. John wants to get a link he can send to his students to refer them to the required reading material for a course.
+        </td>
+    </tr>
+</table>
 
 
+<table>
+    <tr>
+        <td colspan="2"><strong>Jane Doe</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        - Age: 67<br>
+        - Occupation: public librarian<br>
+        - Location: village of Castle Combe, Wiltshire<br>
+        - Disability: None<br>
+        - Quote: “keeping the library stocked with the latest books is a challenge”<br>
+        </td>
+    </tr>
+    <tr>
+        <td>Background</td>
+        <td>
+            Jane is the village librarian, keeping the only local library for the surrounding area up to date. She is responsible for cataloguing the local heritage and history of the lands, as well as running children's events.
+        </td>
+    </tr>
+    <tr>
+        <td>Goals</td>
+        <td>
+            - Easily navigate the website<br>
+            - Check the stock for new books<br>
+            - Order books for use at the library
+        </td>
+    </tr>
+    <tr>
+        <td>Frustrations</td>
+        <td>
+            - Struggles with modern technology<br>
+            - The library computers are slow
+        </td>
+    </tr>
+    <tr>
+        <td>Technology</td>
+        <td>
+            - Library-provided desktop PC<br>
+            - Landline phone
+        </td>
+    </tr>
+    <tr>
+        <td>Scenario</td>
+        <td>
+            Jane wants to buy new books for her library in preparation for an upcoming children's event based around teaching the local history. The event will happen in collaboration with the local primary school, who have requested Jane provide proof of purchase so they can note the expenses in their spending report.
+        </td>
+    </tr>
+</table>
 
-John Doe
-Age: 25
-Occupation: School Teacher
-Location: sheffield, UK
-Disability: None
-Quote: “I love to read books and experience immersive stories”
-Background
-John likes to read books in his spare time, as well as the occasional book required for teaching students.
-Goals
-Buy new books for personal consumption
-Refer students to the platform to buy books for the course
-Frustrations
-Websites are slow to use
-Technology
-Laptop
-Phone
-Scenario
-John logs into his account to search for a new book to read. He wants to browse books based on the genre he is interested in and look for similar titles to books he previously enjoyed reading
-John wants to get a link he can send to his students to refer them to the required reading material for a course
-
-
-Jane Doe
-Age: 67
-Occupation: public librarian
-Location: village of Castle Combe, Wiltshire
-Disability: None
-Quote: “keeping the library stocked with the latest books is a challenge”
-Background
-Jane is the village librarian, keeping the only local library for the surrounding area up to date. She is responsible for cataloguing the local heritage and history of the lands, As well as running children's events.
-Goals
-Easily navigate the website
-Check the stock for new books
-Order books for use at the library
-Frustrations
-Struggles with modern technology
-The library computers are slow
-Technology
-Library provided desktop PC
-Landline phone
-Scenario
-Jane wants to buy new books for her library in preparation for an upcoming children's event based around teaching the local history. The event will happen in collaboration with the local primary school, who have requested Jane provide proof of purchase so they can note the expenses in their spending report.
-
-
-
-Jane Doe
-Age: 39
-Occupation: IT Support Admin
-Location: Swindon
-Disability: Yes
-Quote: “I enjoy making our company more accessible to other user ”
-Background
-Jane is the village librarian, keeping the only local library for the surrounding area up to date. She is responsible for cataloguing the local heritage and history of the lands, As well as running children's events.
-Goals
-Easily navigate the website
-Check the stock for new books
-Order books for use at the library
-Frustrations
-Struggles with modern technology
-The library computers are slow
-Technology
-Library provided desktop PC
-Landline phone
-Scenario
-Jane wants to buy new books for her library in preparation for an upcoming children's event based around teaching the local history. The event will happen in collaboration with the local primary school, who have requested Jane provide proof of purchase so they can note the expenses in their spending report.
-
+<table>
+    <tr>
+        <td colspan="2"><strong>Jane Doe</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        - Age: 39<br>
+        - Occupation: IT Support Admin<br>
+        - Location: Swindon<br>
+        - Disability: Yes<br>
+        - Quote: “I enjoy making our company more accessible to other users”<br>
+        </td>
+    </tr>
+    <tr>
+        <td>Background</td>
+        <td>
+            Jane is the village librarian, keeping the only local library for the surrounding area up to date. She is responsible for cataloguing the local heritage and history of the lands, as well as running children's events.
+        </td>
+    </tr>
+    <tr>
+        <td>Goals</td>
+        <td>
+            - Easily navigate the website<br>
+            - Check the stock for new books<br>
+            - Order books for use at the library
+        </td>
+    </tr>
+    <tr>
+        <td>Frustrations</td>
+        <td>
+            - Struggles with modern technology<br>
+            - The library computers are slow
+        </td>
+    </tr>
+    <tr>
+        <td>Technology</td>
+        <td>
+            - Library-provided desktop PC<br>
+            - Landline phone
+        </td>
+    </tr>
+    <tr>
+        <td>Scenario</td>
+        <td>
+            Jane wants to buy new books for her library in preparation for an upcoming children's event based around teaching the local history. The event will happen in collaboration with the local primary school, who have requested Jane provide proof of purchase so they can note the expenses in their spending report.
+        </td>
+    </tr>
+</table>
 
