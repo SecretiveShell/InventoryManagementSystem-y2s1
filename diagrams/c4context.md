@@ -2,31 +2,26 @@
 
 ```mermaid
 C4Context
+title Books4Bucks - System Context Diagram
 
-    %% Define people
-    Person(customer, "Customer", "A customer who uses the web interface")
-    Person(clerk, "Clerk", "A clerk who assists customers and uses the web interface")
-    Person(admin, "Admin", "An administrator who manages the system")
+Person(admin, "Admin", "Admin users who manage the system.")
+Person(clerk, "Clerk", "Clerk users who interact with the system to manage book transactions.")
 
-    %% External systems
-    Boundary(external, "External Systems") {
-        System(Printer, "Printer", "External printer used for printing customer receipts")
-    }
+System(books4Bucks, "Books4Bucks", "A system for managing book inventories, sales, and user activities.")
 
-    %% Internal systems
-    Boundary(internal, "Internal Systems") {
-        System(Postgres, "PostgreSQL", "Database for storing customer and transaction data")
-        System(Redis, "Redis", "In-memory data structure store used for caching")
-        System(WebUI, "Web Interface", "Frontend for customer and clerk interactions")
-        System(APIserver, "API Server", "Handles business logic and interacts with the database")
-    }
+Rel_D(admin, books4Bucks, "Manages system configurations and user permissions", "HTTP/HTTPS")
+Rel_D(clerk, books4Bucks, "Handles book transactions, updates inventory, and assists customers", "HTTP/HTTPS")
 
-    %% Relations between components
-    Rel_L(customer, WebUI, "Uses", "Customer browses and interacts with the application through the web interface")
-    Rel_L(clerk, WebUI, "Uses", "Clerk assists customers using the same web interface")
-    Rel_R(admin, APIserver, "Manages", "Admin performs management operations through API server")
-    Rel_D(WebUI, APIserver, "Sends requests to", "Web UI sends customer actions to be processed")
-    Rel_D(APIserver, Postgres, "Reads from and writes to", "API server interacts with the database for persistent storage")
-    Rel_D(APIserver, Redis, "Caches data in", "API server caches frequently accessed data in Redis")
-    Rel_D(APIserver, Printer, "Sends print jobs to", "API server sends data to be printed")
+Boundary(System_Boundary, "Books4Bucks") {
+    System(books4Bucks, "Books4Bucks", "A system for managing book inventories, sales, and user activities.")
+}
+Boundary(System_Boundry, "Printer"){
+System_Ext(Printer, "Printer", "An external printer used for printing receipts and reports")
+}
+Rel_D(books4Bucks, Printer, "Sends print data", "USB/Wireless")
+
+UpdateRelStyle(admin,books4Bucks , $offsetY="-30", $offsetX="-150")
+UpdateRelStyle(clerk,books4Bucks , $offsetY="-50", $offsetX="-150")
+UpdateRelStyle(books4Bucks, Printer, $offsetY="-40", $offsetX="-40")
+
 ```
