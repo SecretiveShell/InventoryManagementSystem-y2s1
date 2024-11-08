@@ -21,6 +21,11 @@
 		"python": "pip install --user -r backend/requirements.txt",
 		"node": "cd frontend && npm install"
 	},
+
+	"postStartCommand": "python backend/src/database/ORM.py",
+
+	"postAttachCommand": "git fetch --all",
+
 	"customizations": {
 		"vscode": {
 			"extensions": [
