@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from inventory import router as inventoryRouter
+from book import router as bookRouter
 
 app = FastAPI(
     title="Books4Bucks API Gateway",
@@ -8,3 +9,4 @@ app = FastAPI(
 )
 
 app.include_router(inventoryRouter)
+app.include_router(bookRouter)
