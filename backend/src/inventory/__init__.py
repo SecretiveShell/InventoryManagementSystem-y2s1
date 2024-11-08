@@ -1,8 +1,2 @@
-from fastapi import APIRouter
-
-router = APIRouter(
-    prefix="/inventory",
-    tags=["inventory"],
-)
-
+from .router import router
 from . import list
