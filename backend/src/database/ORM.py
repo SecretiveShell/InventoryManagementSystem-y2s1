@@ -89,8 +89,7 @@ class Author(Base):
 if __name__ == "__main__":
     from sqlalchemy import create_engine
     from sqlalchemy_utils import database_exists, create_database
-
-    DATABASE_URI = "postgresql+psycopg2://postgres:postgres@db:5432/db"
+    from URI import DATABASE_URI
 
     engine = create_engine(DATABASE_URI)
     if not database_exists(engine.url):
