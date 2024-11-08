@@ -88,8 +88,13 @@ class Author(Base):
 # Logic to create tables
 if __name__ == "__main__":
     from sqlalchemy import create_engine
+    from sqlalchemy_utils import database_exists, create_database
 
-    DATABASE_URI = "postgresql+psycopg2://postgres:5432/db"
+    DATABASE_URI = "postgresql+psycopg2://postgres:postgres@db:5432/db"
+
+    engine = create_engine(DATABASE_URI)
+    if not database_exists(engine.url):
+        create_database(engine.url)
 
     engine = create_engine(DATABASE_URI)
     Base.metadata.create_all(engine)
