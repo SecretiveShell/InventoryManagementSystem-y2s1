@@ -14,6 +14,23 @@ book_category_association = Table(
     Column('category_id', Integer, ForeignKey('categories.category_id'), primary_key=True)
 )
 
+order_book_association = Table(
+    'order_book', 
+    Base.metadata,
+    Column('order_id', Integer, ForeignKey('orders.order_id'), primary_key=True),
+    Column('book_id', Integer, ForeignKey('books.book_id'), primary_key=True),
+    Column('quantity', Integer, nullable=False)
+)
+
+book_author_association = Table(
+    'book_author',
+    Base.metadata,
+    Column('book_id', Integer, ForeignKey('books.book_id'), primary_key=True),
+    Column('author_id', Integer, ForeignKey('authors.author_id'), primary_key=True)
+)
+
+
+# data tables
 class User(Base):
     __tablename__ = 'users'
 
@@ -37,7 +54,7 @@ class Order(Base):
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
 
     user = relationship("User", back_populates="orders")
-    books = relationship("Book", secondary='inventory', back_populates="orders")
+    books = relationship("Book", secondary=order_book_association, back_populates="orders")
 
 class Book(Base):
     __tablename__ = 'books'
@@ -53,7 +70,11 @@ class Book(Base):
     categories = relationship(
         "Category", secondary=book_category_association, back_populates="books"
     )
-    authors = relationship("Author", back_populates="books")
+    authors = relationship(
+        "Author", secondary=book_author_association, back_populates="books"
+    )
+    orders = relationship("Order", secondary=order_book_association, back_populates="books")
+
 
 class Inventory(Base):
     __tablename__ = 'inventory'
@@ -83,7 +104,9 @@ class Author(Base):
     name = Column(String, nullable=False)
     bio = Column(String)
 
-    books = relationship("Book", back_populates="authors")
+    books = relationship(
+        "Book", secondary=book_author_association, back_populates="authors"
+    )
 
 # Logic to create tables
 if __name__ == "__main__":
