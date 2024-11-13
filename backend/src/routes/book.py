@@ -1,12 +1,17 @@
-from .router import router
-from models import Book as BookModel
+from fastapi import APIRouter, HTTPException
+from models.book import Book as BookModel
 from database.session import Session
 from database.ORM import Book
 from sqlalchemy import select
-from fastapi import HTTPException
+
+router = APIRouter(
+    prefix="/books",
+    tags=["books"],
+)
 
 @router.get("/get")
 async def get_book(id: int) -> BookModel:
+    """get info about a book"""
     with Session() as session:
         command = select(Book).where(Book.book_id == id)
         book_instance = session.execute(command).scalar_one_or_none() 
