@@ -59,3 +59,5 @@ We chose to address reliability by separating the database into an external serv
 To address security, we will make sure to use pydantic secret string types where passwords are stored in ram, and then hash them in the database. We will use cryptographically secure PRNG to make sure that we do not create insecure tokens, and tokens will expire after 30 minutes.
 
 To improve maintainability we have a dev container config to enable us to create ephemeral environments on the fly for both development and testing. We will also add comments to the code and maintain internal documentation along side the program.
+
+We have also added a test suite to ensure that our code is reliable and secure. We will also add a CI/CD pipeline to automatically run our tests on every push to the repository.      
