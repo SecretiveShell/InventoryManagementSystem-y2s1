@@ -6,11 +6,11 @@ from database.session import Session
 
 
 router = APIRouter(
-    prefix="/books",
-    tags=["books"],
+    prefix="/authors",
+    tags=["authors"],
 )
 
-@router.post("/api/authors", response_model=AuthorResponse)
+@router.post("/", response_model=AuthorResponse)
 def create_author(author: AuthorCreate):
     with Session() as session:
         db_author = Author(**author.dict())
@@ -19,13 +19,13 @@ def create_author(author: AuthorCreate):
         session.refresh(db_author)
         return db_author
 
-@router.get("/api/authors", response_model=list[AuthorResponse])
+@router.get("/", response_model=list[AuthorResponse])
 def get_authors():
     with Session() as session:
         authors = session.query(Author).all()
         return authors
 
-@router.get("/api/authors/{author_id}", response_model=AuthorResponse)
+@router.get("/{author_id}", response_model=AuthorResponse)
 def get_author(author_id: int):
     with Session() as session:
         author = session.query(Author).filter(Author.author_id == author_id).first()
@@ -33,7 +33,7 @@ def get_author(author_id: int):
             raise HTTPException(status_code=404, detail="Author not found")
         return author
 
-@router.put("/api/authors/{author_id}", response_model=AuthorResponse)
+@router.put("/{author_id}", response_model=AuthorResponse)
 def update_author(author_id: int, author: AuthorCreate):
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
@@ -45,7 +45,7 @@ def update_author(author_id: int, author: AuthorCreate):
         session.refresh(db_author)
         return db_author
 
-@router.delete("/api/authors/{author_id}")
+@router.delete("/{author_id}")
 def delete_author(author_id: int):
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
