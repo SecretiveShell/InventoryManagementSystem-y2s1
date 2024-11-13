@@ -1,4 +1,16 @@
-@app.post("/api/authors", response_model=AuthorResponse)
+from fastapi import APIRouter, HTTPException
+from database.ORM import Author
+from models.author import AuthorCreate, AuthorResponse
+from database.session import Session
+
+
+
+router = APIRouter(
+    prefix="/books",
+    tags=["books"],
+)
+
+@router.post("/api/authors", response_model=AuthorResponse)
 def create_author(author: AuthorCreate):
     with Session() as session:
         db_author = Author(**author.dict())
@@ -7,13 +19,13 @@ def create_author(author: AuthorCreate):
         session.refresh(db_author)
         return db_author
 
-@app.get("/api/authors", response_model=list[AuthorResponse])
+@router.get("/api/authors", response_model=list[AuthorResponse])
 def get_authors():
     with Session() as session:
         authors = session.query(Author).all()
         return authors
 
-@app.get("/api/authors/{author_id}", response_model=AuthorResponse)
+@router.get("/api/authors/{author_id}", response_model=AuthorResponse)
 def get_author(author_id: int):
     with Session() as session:
         author = session.query(Author).filter(Author.author_id == author_id).first()
@@ -21,7 +33,7 @@ def get_author(author_id: int):
             raise HTTPException(status_code=404, detail="Author not found")
         return author
 
-@app.put("/api/authors/{author_id}", response_model=AuthorResponse)
+@router.put("/api/authors/{author_id}", response_model=AuthorResponse)
 def update_author(author_id: int, author: AuthorCreate):
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
@@ -33,7 +45,7 @@ def update_author(author_id: int, author: AuthorCreate):
         session.refresh(db_author)
         return db_author
 
-@app.delete("/api/authors/{author_id}")
+@router.delete("/api/authors/{author_id}")
 def delete_author(author_id: int):
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
