@@ -18,7 +18,7 @@ class BookBase(BaseModel):
     )
 
 
-class Book(BookBase):
+class BookInstance(BookBase):
     book_id: int = Field(title="book id", description="the globally unique book ID")
 
 
