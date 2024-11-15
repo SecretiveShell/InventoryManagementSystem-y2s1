@@ -1,8 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from models.book import Book as BookModel
 from database.session import Session
 from database.ORM import Book
-from sqlalchemy import select
 
 router = APIRouter(
     prefix="/inventory",
