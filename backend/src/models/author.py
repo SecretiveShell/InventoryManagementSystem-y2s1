@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from typing import Literal
+from pydantic import BaseModel, Field
 
 
 class AuthorBase(BaseModel):
@@ -15,3 +16,6 @@ class AuthorResponse(AuthorBase):
 
     class Config:
         orm_mode = True
+
+class AuthorDeleteResponse(BaseModel) :
+    detail: Literal["Author deleted successfully"] = Field("Author deleted successfully")
