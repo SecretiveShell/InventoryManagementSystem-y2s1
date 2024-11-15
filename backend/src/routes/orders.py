@@ -1,10 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from models.orders import Order as OrderModel, OrderCreate as OrderCreateModel, OrderStatusUpdate as OrderStatusUpdateModel
+from models.orders import Order as OrderModel, OrderCreate as OrderCreateModel, OrderStatusUpdate
 from models.book import Book as BookModel
 from database.session import Session
 from database.ORM import Order, Book
 from sqlalchemy import select
 from datetime import datetime
+
+
 
 router = APIRouter(
     prefix="/orders",
@@ -48,7 +50,6 @@ async def add_order(order: OrderCreateModel) -> OrderModel:
         new_order = Order(
             order_date=datetime.now(),
             order_status="Pending",
-            shipping_address=order.shipping_address,
             user_id=order.user_id
             )
 
@@ -66,19 +67,26 @@ async def add_order(order: OrderCreateModel) -> OrderModel:
     return OrderModel.model_validate(new_order, from_attributes=True)
 
 # 4. Update the status of an order
-@router.put("/update/{order_id}", response_model=OrderModel)
-async def update_order_status(order_id: int, order_status: OrderStatusUpdateModel) -> OrderModel:
+@router.put("/update/{order_id}", response_model=Order)
+async def update_order_status(order_id: int, order_status: OrderStatusUpdate) -> Order:
     """Update the status of an order"""
     with Session() as session:
-        command = select(Order).where(Order.order_id == order_id)
-        order_instance = session.execute(command).scalar_one_or_none()
+        order_instance = session.execute(
+            select(Order).where(Order.order_id == order_id)
+        ).scalar_one_or_none()
 
         if order_instance is None:
             raise HTTPException(404, detail="Order ID does not exist")
 
-        # FIXME: validate types of order_status
-        #order_instance.order_status = str(order_status.order_status)
-        session.commit()    
+        # Fix: Use setattr to update the attribute
+        setattr(order_instance, "order_status", order_status.order_status)
+        # Alternative fix:
+        # order_instance._order_status = order_status.order_status
+        
+        session.commit()
+        session.refresh(order_instance)
+
+    return Order.model_validate(order_instance, from_attributes=True)
 
 # 5. Delete an order (cancel order)
 @router.delete("/delete/{order_id}", response_model=bool)
