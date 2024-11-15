@@ -90,4 +90,5 @@ async def add_book(book: BookCreateModel) -> bool:
         session.add(book_instance)
         session.commit()
         
+        
     return True
