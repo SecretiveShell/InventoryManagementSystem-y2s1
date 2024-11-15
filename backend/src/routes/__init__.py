@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from .book import router as book_router
 from .inventory import router as inventory_router
 from .author import router as author_router
-from.orders import router as orders_router
+from .orders import router as orders_router
 
 router = APIRouter(
     prefix="/api",

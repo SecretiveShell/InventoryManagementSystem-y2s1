@@ -5,8 +5,10 @@ class AuthorBase(BaseModel):
     name: str
     bio: str
 
+
 class AuthorCreate(AuthorBase):
     pass
+
 
 class AuthorResponse(AuthorBase):
     author_id: int

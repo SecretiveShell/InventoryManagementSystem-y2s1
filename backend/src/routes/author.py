@@ -4,11 +4,11 @@ from models.author import AuthorCreate, AuthorResponse
 from database.session import Session
 
 
-
 router = APIRouter(
     prefix="/authors",
     tags=["authors"],
 )
+
 
 @router.post("/", response_model=AuthorResponse)
 def create_author(author: AuthorCreate):
@@ -19,11 +19,13 @@ def create_author(author: AuthorCreate):
         session.refresh(db_author)
         return db_author
 
+
 @router.get("/", response_model=list[AuthorResponse])
 def get_authors():
     with Session() as session:
         authors = session.query(Author).all()
         return authors
+
 
 @router.get("/{author_id}", response_model=AuthorResponse)
 def get_author(author_id: int):
@@ -32,6 +34,7 @@ def get_author(author_id: int):
         if author is None:
             raise HTTPException(status_code=404, detail="Author not found")
         return author
+
 
 @router.put("/{author_id}", response_model=AuthorResponse)
 def update_author(author_id: int, author: AuthorCreate):
@@ -44,6 +47,7 @@ def update_author(author_id: int, author: AuthorCreate):
         session.commit()
         session.refresh(db_author)
         return db_author
+
 
 @router.delete("/{author_id}")
 def delete_author(author_id: int):
