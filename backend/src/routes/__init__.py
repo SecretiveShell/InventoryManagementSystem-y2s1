@@ -1,3 +1,8 @@
+"""
+This module initializes the API routers for the Inventory Management System.
+
+It includes routers for handling book, inventory, author, and orders operations.
+"""
 from fastapi import APIRouter
 from .book import router as book_router
 from .inventory import router as inventory_router

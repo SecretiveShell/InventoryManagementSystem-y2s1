@@ -1,3 +1,7 @@
+"""
+This module contains the API routes for managing authors in the inventory management system.
+"""
+
 from fastapi import APIRouter, HTTPException
 from database.ORM import Author
 from models.author import AuthorCreate, AuthorDeleteResponse, AuthorResponse
@@ -12,6 +16,15 @@ router = APIRouter(
 
 @router.post("/")
 def create_author(author: AuthorCreate) -> AuthorResponse:
+    """
+    Create a new author.
+
+    Args:
+        author (AuthorCreate): The author data to create.
+
+    Returns:
+        AuthorResponse: The created author data.
+    """
     with Session() as session:
         db_author = Author(**author.model_dump())
         session.add(db_author)
@@ -22,6 +35,12 @@ def create_author(author: AuthorCreate) -> AuthorResponse:
 
 @router.get("/")
 def get_authors() -> list[AuthorResponse]:
+    """
+    Retrieve a list of all authors.
+
+    Returns:
+        list[AuthorResponse]: A list of all authors.
+    """
     with Session() as session:
         authors = session.query(Author).all()
 
@@ -31,6 +50,18 @@ def get_authors() -> list[AuthorResponse]:
 
 @router.get("/{author_id}")
 def get_author(author_id: int) -> AuthorResponse:
+    """
+    Retrieve an author by ID.
+
+    Args:
+        author_id (int): The ID of the author to retrieve.
+
+    Returns:
+        AuthorResponse: The author data.
+
+    Raises:
+        HTTPException: If the author is not found.
+    """
     with Session() as session:
         author = session.query(Author).filter(Author.author_id == author_id).first()
 
@@ -39,12 +70,22 @@ def get_author(author_id: int) -> AuthorResponse:
     
     return AuthorResponse.model_validate(author, from_attributes=True)
 
-# FIXME:
-#   1) what does this even do?
-#   2) can we please not use deprecated pydantic methods
-#   3) I am fairly sure this will break because the return is not a pydantic model
+
 @router.put("/{author_id}", response_model=AuthorResponse)
-def update_author(author_id: int, author: AuthorCreate):
+def update_author(author_id: int, author: AuthorCreate) -> AuthorResponse:
+    """
+    Update an author by ID.
+
+    Args:
+        author_id (int): The ID of the author to update.
+        author (AuthorCreate): The updated author data.
+
+    Returns:
+        AuthorResponse: The updated author data.
+
+    Raises:
+        HTTPException: If the author is not found.
+    """
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
         if db_author is None:
@@ -57,7 +98,19 @@ def update_author(author_id: int, author: AuthorCreate):
 
 
 @router.delete("/{author_id}")
-def delete_author(author_id: int):
+def delete_author(author_id: int) -> AuthorDeleteResponse:
+    """
+    Delete an author by ID.
+
+    Args:
+        author_id (int): The ID of the author to delete.
+
+    Returns:
+        AuthorDeleteResponse: A response indicating the deletion.
+
+    Raises:
+        HTTPException: If the author is not found.
+    """
     with Session() as session:
         db_author = session.query(Author).filter(Author.author_id == author_id).first()
         if db_author is None:

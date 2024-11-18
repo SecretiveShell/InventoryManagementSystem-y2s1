@@ -1,8 +1,12 @@
+"""
+This module contains the API routes for managing books in the inventory management system.
+"""
+
 from fastapi import APIRouter, HTTPException
-from models.book import Book as BookModel, BookCreate as BookCreateModel
-from database.session import Session
 from database.ORM import Book
-from sqlalchemy import select
+from models.book import BookCreate, BookDeleteResponse, BookResponse
+from database.session import Session
+
 
 router = APIRouter(
     prefix="/books",
@@ -10,25 +14,107 @@ router = APIRouter(
 )
 
 
-@router.get("/get")
-async def get_book(id: int) -> BookModel:
-    """get info about a book"""
+@router.post("/")
+def create_book(book: BookCreate) -> BookResponse:
+    """
+    Create a new book.
+
+    Args:
+        book (BookCreate): The book data to create.
+
+    Returns:
+        BookResponse: The created book data.
+    """
     with Session() as session:
-        command = select(Book).where(Book.book_id == id)
-        book_instance = session.execute(command).scalar_one_or_none()
-
-    if book_instance is None:
-        raise HTTPException(404, detail="book ID does not exist")
-
-    return BookModel.model_validate(book_instance, from_attributes=True)
-
-
-@router.post("/add")
-async def add_book(book: BookCreateModel) -> bool:
-    """add a book"""
-    with Session() as session:
-        book_instance = Book(**book.model_dump())
-        session.add(book_instance)
+        db_book = Book(**book.model_dump())
+        session.add(db_book)
         session.commit()
+        session.refresh(db_book)
+        return db_book
 
-    return True
+
+@router.get("/")
+def get_books() -> list[BookResponse]:
+    """
+    Retrieve a list of all books.
+
+    Returns:
+        list[BookResponse]: A list of all books.
+    """
+    with Session() as session:
+        books = session.query(Book).all()
+
+    response = [BookResponse.model_validate(book, from_attributes=True) for book in books]
+    return response
+
+
+@router.get("/{book_id}")
+def get_book(book_id: int) -> BookResponse:
+    """
+    Retrieve a book by ID.
+
+    Args:
+        book_id (int): The ID of the book to retrieve.
+
+    Returns:
+        BookResponse: The book data.
+
+    Raises:
+        HTTPException: If the book is not found.
+    """
+    with Session() as session:
+        book = session.query(Book).filter(Book.book_id == book_id).first()
+
+    if book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    
+    return BookResponse.model_validate(book, from_attributes=True)
+
+
+@router.put("/{book_id}", response_model=BookResponse)
+def update_book(book_id: int, book: BookCreate) -> BookResponse:
+    """
+    Update a book by ID.
+
+    Args:
+        book_id (int): The ID of the book to update.
+        book (BookCreate): The updated book data.
+
+    Returns:
+        BookResponse: The updated book data.
+
+    Raises:
+        HTTPException: If the book is not found.
+    """
+    with Session() as session:
+        db_book = session.query(Book).filter(Book.book_id == book_id).first()
+        if db_book is None:
+            raise HTTPException(status_code=404, detail="Book not found")
+        for key, value in book.dict().items():
+            setattr(db_book, key, value)
+        session.commit()
+        session.refresh(db_book)
+        return db_book
+
+
+@router.delete("/{book_id}")
+def delete_book(book_id: int) -> BookDeleteResponse:
+    """
+    Delete a book by ID.
+
+    Args:
+        book_id (int): The ID of the book to delete.
+
+    Returns:
+        BookDeleteResponse: A response indicating the deletion.
+
+    Raises:
+        HTTPException: If the book is not found.
+    """
+    with Session() as session:
+        db_book = session.query(Book).filter(Book.book_id == book_id).first()
+        if db_book is None:
+            raise HTTPException(status_code=404, detail="Book not found")
+        session.delete(db_book)
+        session.commit()
+        return BookDeleteResponse()
