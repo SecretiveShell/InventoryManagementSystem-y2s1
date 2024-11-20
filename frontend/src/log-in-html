@@ -9,7 +9,7 @@
 <body>
     <div class="header">
         <a href="#">Home</a>
-        <a href="#">Sign In</a>
+        <a href="#">Sign Up</a>
         <a href="#">Browse</a>
         <a href="#">Reset Password</a>
     </div>
