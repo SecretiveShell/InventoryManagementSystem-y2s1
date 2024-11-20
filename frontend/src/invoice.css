@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background: #fff;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #333;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.navbar button {
+    padding: 5px 10px;
+    background-color: #ddd;
+    border: 1px solid #333;
+    cursor: pointer;
+}
+
+header h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.invoice-details h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.invoice-details p {
+    font-size: 14px;
+}
+
+.billing-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.billing-info h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.billing-info p {
+    font-size: 14px;
+}
+
+.item-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.item-table th, .item-table td {
+    border: 1px solid #333;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.item-table .total-label {
+    text-align: right;
+    font-weight: bold;
+}
+
+.payment-info {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.payment-info p {
+    margin: 5px 0;
+}
+
+.print-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.print-button button {
+    padding: 5px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #333;
+    background-color: #ddd;
+}
+@media print {
+    /* Set the container to full height of A4 */
+    body {
+        margin: 0;
+        padding: 0;
+        display: block;
+    }
+    .container {
+        width: 210mm; /* A4 width */
+        height: 297mm; /* A4 height */
+        padding: 20mm; /* Add some padding for print */
+        border: none; /* Remove border in print */
+        box-shadow: none; /* Remove shadow */
+        page-break-after: always; /* Ensures page breaks after */
+    }
+
+    .navbar, .print-button {
+        display: none; /* Hide navigation and print button in print */
+    }
+}

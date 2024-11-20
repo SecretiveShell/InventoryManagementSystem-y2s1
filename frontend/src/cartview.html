@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#">Browse</a>
+        <a href="#">Cart</a>
+        <a href="#">Log Out</a>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart-container">
+        <h1>Cart</h1>
+
+        <table id="cart-table">
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>QTY</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Book A</td>
+                    <td>12345</td>
+                    <td>£10</td>
+                    <td>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="decreaseQty(this)">-</button>
+                            <span class="qty-display">1</span>
+                            <button class="qty-btn" onclick="increaseQty(this)">+</button>
+                        </div>
+                    </td>
+                    <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Book B</td>
+                    <td>67890</td>
+                    <td>£15</td>
+                    <td>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="decreaseQty(this)">-</button>
+                            <span class="qty-display">2</span>
+                            <button class="qty-btn" onclick="increaseQty(this)">+</button>
+                        </div>
+                    </td>
+                    <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="actions">
+            <button class="stock-btn" onclick="removeFromStock()">Remove from Stock</button>
+            <a href="invoice.html" class="invoice-link">Create Invoice</a>
+            <button  class="invoice-link" a href="invoice.html">Create Invoice</button>
+        </div>
+    </div>
+
+    <script>
+        // Increase Quantity
+        function increaseQty(button) {
+            const qtyDisplay = button.previousElementSibling;
+            let currentQty = parseInt(qtyDisplay.textContent);
+            qtyDisplay.textContent = currentQty + 1;
+        }
+
+        // Decrease Quantity
+        function decreaseQty(button) {
+            const qtyDisplay = button.nextElementSibling;
+            let currentQty = parseInt(qtyDisplay.textContent);
+            if (currentQty > 1) qtyDisplay.textContent = currentQty - 1;
+        }
+
+        // Remove Row
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        // Remove from Stock
+        function removeFromStock() {
+            const tableBody = document.getElementById('cart-table').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear the entire cart
+            alert('All items removed from stock.');
+        }
+    </script>
+</body>
+</html>
