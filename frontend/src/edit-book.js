@@ -31,6 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clear localStorage and return to main page
         localStorage.removeItem('currentBook');
-        window.location.href = 'index.html';
+        window.location.href = 'inventory.html';
     });
 });
