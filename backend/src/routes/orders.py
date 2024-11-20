@@ -4,7 +4,7 @@ from models.orders import (
     OrderCreate as OrderCreateModel,
     OrderStatusUpdate,
 )
-from models.book import Book as BookModel
+from models.book import BookResponse
 from database.session import Session
 from database.ORM import Order, Book
 from sqlalchemy import select
@@ -121,7 +121,7 @@ async def delete_order(order_id: int) -> bool:
 
 # 6. Get books in a specific order
 @router.get("/get/{order_id}/books")
-async def get_books_in_order(order_id: int) -> list[BookModel]:
+async def get_books_in_order(order_id: int) -> list[BookResponse]:
     """Get the list of books in a specific order"""
     with Session() as session:
         command = select(Order).where(Order.order_id == order_id)
@@ -132,6 +132,6 @@ async def get_books_in_order(order_id: int) -> list[BookModel]:
 
         # Return the books related to this order
         return [
-            BookModel.model_validate(book, from_attributes=True)
+            BookResponse.model_validate(book, from_attributes=True)
             for book in order_instance.books
         ]
