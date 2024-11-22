@@ -122,7 +122,9 @@ class Author(Base):
 if __name__ == "__main__":
     from sqlalchemy import create_engine
     from sqlalchemy_utils import database_exists, create_database
-    from URI import DATABASE_URI
+    from URI import DATABASE_URI  # type: ignore
+    # (because this is not part of the main codebase,
+    # its a utility function if you run this directly)
 
     engine = create_engine(DATABASE_URI)
     if not database_exists(engine.url):
