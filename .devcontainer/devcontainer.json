@@ -34,7 +34,9 @@
 				"cweijan.vscode-database-client2",
 				"ms-python.python",
 				"charliermarsh.ruff",
-				"ms-python.mypy-type-checker"
+				"ms-python.mypy-type-checker",
+				"Gruntfuggly.todo-tree",
+				"esbenp.prettier-vscode"
 			]
 		}
 	}
