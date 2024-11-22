@@ -9,11 +9,12 @@ from database.session import Session
 from database.ORM import Order, Book
 from sqlalchemy import select
 from datetime import datetime
+from openapi_tags import OpenAPITags
 
 
 router = APIRouter(
     prefix="/orders",
-    tags=["orders"],
+    tags=[OpenAPITags.orders.value],
 )
 
 # FIXME: Add auth to this file

@@ -7,11 +7,12 @@ from database.ORM import Author
 from models.author import AuthorCreate, AuthorDeleteResponse, AuthorResponse
 from database.session import Session
 from auth.login import get_admin_depends
+from openapi_tags import OpenAPITags
 
 
 router = APIRouter(
     prefix="/authors",
-    tags=["authors"],
+    tags=[OpenAPITags.authors.value],
 )
 
 

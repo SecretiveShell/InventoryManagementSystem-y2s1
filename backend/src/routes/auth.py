@@ -6,10 +6,11 @@ from auth.redis_user_model import RedisUserModel
 from database.ORM import User
 from models.auth import LoginRequest, LoginResponse
 from database.session import Session
+from openapi_tags import OpenAPITags
 
 router = APIRouter(
     prefix="/auth",
-    tags=["auth"],
+    tags=[OpenAPITags.auth.value],
 )
 
 

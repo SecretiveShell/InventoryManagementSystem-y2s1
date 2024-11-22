@@ -7,10 +7,12 @@ from database.ORM import Book
 from models.book import BookCreate, BookDeleteResponse, BookResponse
 from database.session import Session
 from auth.login import get_admin_depends
+from openapi_tags import OpenAPITags
+
 
 router = APIRouter(
     prefix="/books",
-    tags=["books"],
+    tags=[OpenAPITags.books.value],
 )
 
 

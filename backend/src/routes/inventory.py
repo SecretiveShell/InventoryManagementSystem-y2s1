@@ -3,10 +3,11 @@ from database.session import Session
 from database.ORM import Book
 from models.book import BookInstance
 from auth.login import get_admin_depends
+from openapi_tags import OpenAPITags
 
 router = APIRouter(
     prefix="/inventory",
-    tags=["inventory"],
+    tags=[OpenAPITags.inventory.value],
 )
 
 
