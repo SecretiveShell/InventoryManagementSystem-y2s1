@@ -7,6 +7,7 @@ REDIS_URL = getenv("B4B_REDIS_URL", "redis://localhost")
 
 pool = redis.ConnectionPool.from_url(REDIS_URL)
 
+
 @asynccontextmanager
 async def get_redis_client():
     """Context manager to get a redis client"""

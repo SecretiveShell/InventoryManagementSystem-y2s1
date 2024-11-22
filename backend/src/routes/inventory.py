@@ -19,7 +19,9 @@ async def view_inventory() -> list[BookInstance]:
     """
     with Session() as session:
         books = session.query(Book).all()
-        return [BookInstance.model_validate(book, from_attributes=True) for book in books]
+        return [
+            BookInstance.model_validate(book, from_attributes=True) for book in books
+        ]
 
 
 @router.get("/{book_id}")

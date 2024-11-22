@@ -21,11 +21,14 @@ class BookBase(BaseModel):
 class BookInstance(BookBase):
     book_id: int = Field(title="book id", description="the globally unique book ID")
 
+
 class BookCreate(BookBase):
     pass
+
 
 class BookResponse(BookBase):
     book_id: int = Field(title="book id", description="the globally unique book ID")
 
-class BookDeleteResponse(BaseModel) :
+
+class BookDeleteResponse(BaseModel):
     detail: str = Field("Book deleted successfully")

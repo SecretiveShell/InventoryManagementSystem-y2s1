@@ -3,7 +3,8 @@ from .redis_client import get_redis_client
 from secrets import token_hex
 from .redis_user_model import RedisUserModel
 
-TOKEN_EXPIRE = 60 * 30 # 30 minutes
+TOKEN_EXPIRE = 60 * 30  # 30 minutes
+
 
 async def create_session(User: RedisUserModel) -> str:
     """Function to create a session for a user, returns a session token"""
@@ -15,10 +16,12 @@ async def create_session(User: RedisUserModel) -> str:
 
     return token
 
+
 async def delete_session(token: str) -> None:
     """Function to delete a session for a user"""
     async with get_redis_client() as redis:
         redis.delete(token)
+
 
 # this can be depended on to check if a user is logged in
 async def get_user_from_session(token: str) -> RedisUserModel:
@@ -29,5 +32,5 @@ async def get_user_from_session(token: str) -> RedisUserModel:
     # if the user_json is None, the session token is invalid
     if user_json is None:
         raise HTTPException(status_code=401, detail="Invalid session token")
-        
+
     return RedisUserModel(**user_json)

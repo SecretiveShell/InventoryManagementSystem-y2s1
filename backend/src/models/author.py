@@ -17,5 +17,8 @@ class AuthorResponse(AuthorBase):
     class Config:
         orm_mode = True
 
-class AuthorDeleteResponse(BaseModel) :
-    detail: Literal["Author deleted successfully"] = Field("Author deleted successfully")
+
+class AuthorDeleteResponse(BaseModel):
+    detail: Literal["Author deleted successfully"] = Field(
+        "Author deleted successfully"
+    )

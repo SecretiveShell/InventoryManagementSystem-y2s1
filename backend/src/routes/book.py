@@ -44,7 +44,9 @@ def get_books() -> list[BookResponse]:
     with Session() as session:
         books = session.query(Book).all()
 
-    response = [BookResponse.model_validate(book, from_attributes=True) for book in books]
+    response = [
+        BookResponse.model_validate(book, from_attributes=True) for book in books
+    ]
     return response
 
 
@@ -67,7 +69,7 @@ def get_book(book_id: int) -> BookResponse:
 
     if book is None:
         raise HTTPException(status_code=404, detail="Book not found")
-    
+
     return BookResponse.model_validate(book, from_attributes=True)
 
 

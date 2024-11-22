@@ -7,12 +7,13 @@ router = APIRouter(
     tags=["auth"],
 )
 
+
 @router.post("/login")
 async def login(login: LoginRequest) -> LoginResponse:
-
     # TODO: Implement login functionality
 
     return LoginResponse(success=True, token="token")
+
 
 @router.post("/logout")
 async def logout() -> Literal[True]:

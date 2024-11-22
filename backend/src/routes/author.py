@@ -44,7 +44,10 @@ def get_authors() -> list[AuthorResponse]:
     with Session() as session:
         authors = session.query(Author).all()
 
-    response = [AuthorResponse.model_validate(author, from_attributes=True) for author in authors]
+    response = [
+        AuthorResponse.model_validate(author, from_attributes=True)
+        for author in authors
+    ]
     return response
 
 
@@ -67,7 +70,7 @@ def get_author(author_id: int) -> AuthorResponse:
 
     if author is None:
         raise HTTPException(status_code=404, detail="Author not found")
-    
+
     return AuthorResponse.model_validate(author, from_attributes=True)
 
 
