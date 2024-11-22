@@ -1,5 +1,6 @@
-from typing import Literal
-from fastapi import APIRouter
+from typing import Annotated, Literal
+from fastapi import APIRouter, Depends
+from auth.login import delete_session
 from models.auth import LoginRequest, LoginResponse
 
 router = APIRouter(
@@ -16,6 +17,5 @@ async def login(login: LoginRequest) -> LoginResponse:
 
 
 @router.post("/logout")
-async def logout() -> Literal[True]:
-    # TODO: Implement logout functionality
-    return True
+async def logout(success: Annotated[Literal[True], Depends(delete_session)]) -> Literal[True]:
+    return success

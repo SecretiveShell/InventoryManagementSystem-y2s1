@@ -1,4 +1,5 @@
-from fastapi import HTTPException
+from typing import Annotated, Literal
+from fastapi import Depends, HTTPException, Header
 from .redis_client import get_redis_client
 from secrets import token_hex
 from .redis_user_model import RedisUserModel
@@ -17,14 +18,16 @@ async def create_session(User: RedisUserModel) -> str:
     return token
 
 
-async def delete_session(token: str) -> None:
+async def delete_session(token: Annotated[str, Header()]) -> Literal[True]:
     """Function to delete a session for a user"""
     async with get_redis_client() as redis:
         redis.delete(token)
+    
+    return True
 
 
 # this can be depended on to check if a user is logged in
-async def get_user_from_session(token: str) -> RedisUserModel:
+async def get_user_from_session(token: Annotated[str, Header()]) -> RedisUserModel:
     """Function to get a user from a session"""
     async with get_redis_client() as redis:
         user_json = redis.get(token)
@@ -34,3 +37,9 @@ async def get_user_from_session(token: str) -> RedisUserModel:
         raise HTTPException(status_code=401, detail="Invalid session token")
 
     return RedisUserModel(**user_json)
+
+# this just annotates the get_user_from_session function
+# improves DRY with fastapi dependency injection
+get_session_depends = Annotated[
+    RedisUserModel, Depends(get_user_from_session)
+]
