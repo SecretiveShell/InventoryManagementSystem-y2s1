@@ -37,6 +37,4 @@ class OrderResponse(OrderBase):
     order_id: int  # ID of the order
 
     class Config:
-        orm_mode = (
-            True  # Tells Pydantic to read data even if it comes from an ORM model
-        )
+        from_attributes = True

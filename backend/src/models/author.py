@@ -15,7 +15,7 @@ class AuthorResponse(AuthorBase):
     author_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class AuthorDeleteResponse(BaseModel):
