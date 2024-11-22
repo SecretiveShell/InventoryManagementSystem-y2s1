@@ -7,6 +7,7 @@ erDiagram
         int user_id PK
         string name
         string email
+        string password
         string address
         string phone_number
         date date_joined
