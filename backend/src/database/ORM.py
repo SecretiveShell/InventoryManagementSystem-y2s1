@@ -37,6 +37,7 @@ class User(Base):
     user_id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
     address = Column(String)
     phone_number = Column(String)
     date_joined = Column(Date, nullable=False)
