@@ -43,3 +43,13 @@ async def get_user_from_session(token: Annotated[str, Header()]) -> RedisUserMod
 get_session_depends = Annotated[
     RedisUserModel, Depends(get_user_from_session)
 ]
+
+# this is a utility function to force a logged in user to be an admin
+async def get_admin(user: get_session_depends) -> RedisUserModel:
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    return user
+
+get_admin_depends = Annotated[
+    RedisUserModel, Depends(get_admin)
+]

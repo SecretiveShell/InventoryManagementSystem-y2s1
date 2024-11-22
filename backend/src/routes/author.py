@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException
 from database.ORM import Author
 from models.author import AuthorCreate, AuthorDeleteResponse, AuthorResponse
 from database.session import Session
+from auth.login import get_admin_depends
 
 
 router = APIRouter(
@@ -15,7 +16,7 @@ router = APIRouter(
 
 
 @router.post("/")
-def create_author(author: AuthorCreate) -> AuthorResponse:
+def create_author(user: get_admin_depends, author: AuthorCreate) -> AuthorResponse:
     """
     Create a new author.
 
@@ -75,7 +76,7 @@ def get_author(author_id: int) -> AuthorResponse:
 
 
 @router.put("/{author_id}", response_model=AuthorResponse)
-def update_author(author_id: int, author: AuthorCreate) -> AuthorResponse:
+def update_author(user: get_admin_depends,author_id: int, author: AuthorCreate) -> AuthorResponse:
     """
     Update an author by ID.
 
@@ -101,7 +102,7 @@ def update_author(author_id: int, author: AuthorCreate) -> AuthorResponse:
 
 
 @router.delete("/{author_id}")
-def delete_author(author_id: int) -> AuthorDeleteResponse:
+def delete_author(user: get_admin_depends, author_id: int) -> AuthorDeleteResponse:
     """
     Delete an author by ID.
 

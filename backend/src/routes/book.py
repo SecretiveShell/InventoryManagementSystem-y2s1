@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from database.ORM import Book
 from models.book import BookCreate, BookDeleteResponse, BookResponse
 from database.session import Session
-
+from auth.login import get_admin_depends
 
 router = APIRouter(
     prefix="/books",
@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.post("/")
-def create_book(book: BookCreate) -> BookResponse:
+def create_book(user: get_admin_depends, book: BookCreate) -> BookResponse:
     """
     Create a new book.
 
@@ -74,7 +74,7 @@ def get_book(book_id: int) -> BookResponse:
 
 
 @router.put("/{book_id}", response_model=BookResponse)
-def update_book(book_id: int, book: BookCreate) -> BookResponse:
+def update_book(user: get_admin_depends, book_id: int, book: BookCreate) -> BookResponse:
     """
     Update a book by ID.
 
@@ -100,7 +100,7 @@ def update_book(book_id: int, book: BookCreate) -> BookResponse:
 
 
 @router.delete("/{book_id}")
-def delete_book(book_id: int) -> BookDeleteResponse:
+def delete_book(user: get_admin_depends, book_id: int) -> BookDeleteResponse:
     """
     Delete a book by ID.
 

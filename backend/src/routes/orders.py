@@ -16,6 +16,8 @@ router = APIRouter(
     tags=["orders"],
 )
 
+# FIXME: Add auth to this file
+
 
 # 1. Get all orders
 @router.get("/get")

@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from database.session import Session
 from database.ORM import Book
 from models.book import BookInstance
+from auth.login import get_admin_depends
 
 router = APIRouter(
     prefix="/inventory",
@@ -46,7 +47,7 @@ async def view_inventory_for_book(book_id: int) -> BookInstance:
 
 
 @router.post("/{book_id}")
-async def add_to_inventory(book_id: int) -> BookInstance:
+async def add_to_inventory(user: get_admin_depends, book_id: int) -> BookInstance:
     """
     Add a book to the inventory.
 
@@ -69,7 +70,7 @@ async def add_to_inventory(book_id: int) -> BookInstance:
 
 
 @router.delete("/{book_id}")
-async def remove_from_inventory(book_id: int) -> BookInstance:
+async def remove_from_inventory(user: get_admin_depends, book_id: int) -> BookInstance:
     """
     Remove a book from the inventory.
 
@@ -92,7 +93,7 @@ async def remove_from_inventory(book_id: int) -> BookInstance:
 
 
 @router.put("/{book_id}")
-async def update_inventory(book_id: int, book_data: BookInstance) -> BookInstance:
+async def update_inventory(user: get_admin_depends, book_id: int, book_data: BookInstance) -> BookInstance:
     """
     Update the inventory details for a specific book.
 
