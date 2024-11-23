@@ -10,7 +10,7 @@ class OrderBase(BaseModel):
     order_status: Annotated[
         str, "Order status (e.g., 'Pending', 'Shipped', 'Delivered')"
     ]
-    user_id: int
+    user_id: int # TODO: move this out of here
     books: List[int] = []  # List of book IDs in the order
 
 
