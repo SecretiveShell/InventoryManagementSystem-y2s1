@@ -1,28 +1,22 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const header = document.querySelector('.header');
-    const loginForm = document.querySelector('.login-form');
-
-    function adjustLayout() {
-        if (window.innerWidth < 768) {
-            header.style.flexDirection = 'column';
-            header.style.padding = '10px';
-            Array.from(header.children).forEach(link => {
-                link.style.margin = '10px 0';
-            });
-
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
         
-            loginForm.style.width = '90%';
-            loginForm.style.padding = '20px';
-        } else {
-            header.style.flexDirection = 'row';
-            header.style.padding = '20px';
-            Array.from(header.children).forEach(link => {
-                link.style.margin = '0 20px';
-            });
-            loginForm.style.width = '400px';
-            loginForm.style.padding = '40px';
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+            alert('Please enter both email and password');
+            return;
         }
-    }
-    adjustLayout();
-    window.addEventListener('resize', adjustLayout);
+        
+        // remove later - only for demonstaration
+        if (email === 'user@a.com' && password === '12345678') {
+            window.location.href = 'inventory.html';
+        } else {
+            alert('Invalid email or password');
+        }
+    });
 });

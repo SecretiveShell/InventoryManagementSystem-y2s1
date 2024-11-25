@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.display = text.includes(searchTerm) ? '' : 'none';
         });
     });
-
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.add-to-basket-btn').forEach((button) => {
+            button.addEventListener('click', () => {
+                alert('Item added');
+            });
+        });
+    });
     // Edit button functionality
     document.querySelectorAll('.edit-btn').forEach((button) => {
         button.addEventListener('click', () => {

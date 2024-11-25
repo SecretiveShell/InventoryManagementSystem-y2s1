@@ -86,6 +86,20 @@ th {
 .edit-btn:hover {
     background-color: #1976D2;
 }
+/* Add to basket button styles */
+.add-to-basket-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-basket-btn:hover {
+    background-color: #1976D2;
+}
 
 /* Pagination Styles */
 .pagination {
@@ -193,3 +207,61 @@ th {
 .actions button:hover {
     background-color: #45a049;
 }
+/* General Styling for Forms */
+.login-form, .signup-form, .reset-password-form  {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.login-form label, .signup-form label, .reset-password-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    text-align: left;
+}
+
+.login-form input, .signup-form input, .reset-password-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-form .button, .signup-form .button, .reset-password-form .button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form .button:hover, .signup-form .button:hover, .reset-password-form .button:hover {
+    background-color: #45a049;
+}
+
+
+/* Link Styling */
+.reset-password-link,
+.register-link, .login-link {
+    display: block;
+    margin-top: 10px;
+    color: #2196F3;
+    text-decoration: none;
+    text-align: center;
+}
+
+.reset-password-link:hover,
+.register-link:hover, .login-link:hover {
+    text-decoration: underline;
+}
+

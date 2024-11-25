@@ -18,7 +18,7 @@
             <button>Log Out</button>
         </div>
     </nav>
-
+    <h1 class="title">Books4Bucks</h1>
     <!-- Cart Section -->
     <div class="cart-container">
         <h1>Cart</h1>
@@ -65,38 +65,30 @@
 
         <div class="actions">
             <button class="stock-btn" onclick="removeFromStock()">Clear Cart</button>
-            <a href="invoice.html" class="invoice-link">Create Invoice</a>
-            <button  class="invoice-link" "a href=invoice.html">Create Invoice</button>
+            <button class="invoice-link" onclick="window.location.href='invoice.html'">Create Invoice</button>
         </div>
     </div>
 
-    <script>
-        // Increase Quantity
-        function increaseQty(button) {
-            const qtyDisplay = button.previousElementSibling;
-            let currentQty = parseInt(qtyDisplay.textContent);
-            qtyDisplay.textContent = currentQty + 1;
-        }
-
-        // Decrease Quantity
-        function decreaseQty(button) {
-            const qtyDisplay = button.nextElementSibling;
-            let currentQty = parseInt(qtyDisplay.textContent);
-            if (currentQty > 1) qtyDisplay.textContent = currentQty - 1;
-        }
-
-        // Remove Row
-        function removeRow(button) {
-            const row = button.closest('tr');
-            row.remove();
-        }
-
-        // Remove from Stock
-        function removeFromStock() {
-            const tableBody = document.getElementById('cart-table').querySelector('tbody');
-            tableBody.innerHTML = ''; // Clear the entire cart
-            alert('All items removed from cart.');
-        }
-    </script>
+    <script src="./cartview.js"></script>
 </body>
 </html>
+# Books4Bucks {#books4bucks .title}
+
+::: search-container
+:::
+
+  ISBN No             Title                                       Quantity   Price   Location    Author            Actions
+  ------------------- ------------------------------------------- ---------- ------- ----------- ----------------- ---------
+  978-0-141-18785-5   1984                                        25         £8.99   Sheffield   George Orwell     Edit | Add to Basket
+  978-0-261-10320-7   The Hobbit                                  18         £7.99   Leeds       J.R.R. Tolkien    Edit | Add to Basket
+  978-0-747-54624-4   Harry Potter and the Philosopher\'s Stone   30         £6.99   Doncaster   J.K. Rowling      Edit | Add to Basket
+  978-0-099-54913-6   Pride and Prejudice                         15         £5.99   Sheffield   Jane Austen       Edit | Add to Basket
+  978-0-008-32741-7   Murder on the Orient Express                20         £7.49   Leeds       Agatha Christie   Edit | Add to Basket
+  978-0-141-04931-3   Great Expectations                          12         £6.49   Doncaster   Charles Dickens   Edit | Add to Basket
+  978-0-141-18287-4   The Catcher in the Rye                      22         £8.49   Sheffield   J.D. Salinger     Edit | Add to Basket
+
+::: pagination
+Previous
+
+Next
+:::

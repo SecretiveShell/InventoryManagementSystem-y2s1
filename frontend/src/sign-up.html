@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">
-        <a href="#">Home</a>
-        <a href="#">Log In</a>
-        <a href="#">Browse</a>
-        <a href="#">Reset Password</a>
-    </div>
+    <nav class="navbar">
+        <div>
+            <button>Login</button>
+        </div>
+    </nav> 
+    <h1 class="title">Books4Bucks</h1>
     <div class="content">
-        <h1>Books4bucks</h1>
-        <h2>Sign Up</h2>
-        <img src="books-image.jpg" alt="Books Image" class="books-image" />
         <form class="signup-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -28,7 +25,7 @@
             <input type="password" id="confirm-password" name="confirm-password" required>
             <button type="submit" class="button">Sign Up</button>
         </form>
-        <a href="#" class="login-link">Already have an account? Click here to login</a>
+        <a href="log-in.html" class="login-link">Already have an account? Click here to login</a>
     </div>
 </body>
 </html>

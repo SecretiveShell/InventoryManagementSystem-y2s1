@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">
-        <a href="#">Home</a>
-        <a href="#">Sign Up</a>
-        <a href="#">Browse</a>
-        <a href="#">Reset Password</a>
-    </div>
-    <div class="content">
-        <h1>Books4bucks</h1>
-        <h2>Login Screen</h2>
+    <nav class="navbar">
+        <div>
+            <button>Home</button>
+        </div>
+    </nav>
+    <h1 class="title">Books4Bucks</h1>
+    <div>
         <form class="login-form">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -23,7 +21,8 @@
             <input type="password" id="password" name="password" required>
             <button type="submit" class="button">Login</button>
         </form>
-        <a href="#" class="register-link">Don't have an account? Click here to register</a>
+        <a href="reset-password.html" class="reset-password-link">Forgot your password? Click here to reset</a>
+        <a href="sign-up.html" class="register-link">Don't have an account? Click here to register</a>
     </div>
 </body>
 </html>
