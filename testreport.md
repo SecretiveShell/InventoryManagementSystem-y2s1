@@ -4,16 +4,16 @@ Project: (Business) Inventory Management System
 Group #: 15
 
 Date:  27/11/2024
- 
-<br>Table of Contents:
-<br>Introduction	
-<br>Test strategy	
-<br>Objectives	
-<br>Scope	
-<br>Unit Testing	
-<br>Test Cases	
-<br>Non-Functional Requirements testing	
-<br>Appendix 1: Defect report	
+
+**Table of Contents:**
+- Introduction	
+- Test strategy	
+- Objectives	
+- Scope	
+- Unit Testing	
+- Test Cases	
+- Non-Functional Requirements testing	
+- Appendix 1: Defect report	
 
 
 
