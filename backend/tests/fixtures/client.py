@@ -1,4 +1,12 @@
-from fastapi import FastAPI  # noqa: F401
-from fastapi.testclient import TestClient  # noqa: F401
+import pytest
+from fastapi.testclient import TestClient
+from src.main import app  # Import FastAPI app from the src.main module
 
-# TODO: add fixtures here
+@pytest.fixture(scope="session")
+def client():
+    """
+    Fixture to create a TestClient for FastAPI app.
+    Scope set to "session" so the client is shared across all tests.
+    """
+    client = TestClient(app)
+    yield client
