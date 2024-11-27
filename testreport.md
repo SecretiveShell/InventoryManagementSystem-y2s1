@@ -5,21 +5,22 @@ Group #: 15
 
 Date:  27/11/2024
  
-Table of Contents
-Introduction	3
-Test strategy	3
-Objectives	3
-Scope	3
-Unit Testing	3
-Test Cases	4
-Non-Functional Requirements testing	5
-Appendix 1: Defect report	6
+<br>Table of Contents:
+<br>Introduction	
+<br>Test strategy	
+<br>Objectives	
+<br>Scope	
+<br>Unit Testing	
+<br>Test Cases	
+<br>Non-Functional Requirements testing	
+<br>Appendix 1: Defect report	
 
 
 
  
 ## Introduction
 Briefly Describe the report's purpose.
+
 To evaluate the reliability of the functionalities of different user interaction pages: Sign Up, Log-In, Reset Password, and Invoices Pages. This testing process aims to ensure that these buttons perform as expected across multiple devices, web browsers, and under various conditions to provide a smooth user experience 
 Test strategy
 Provide a clear overview of your application's testing approach, detailing the methods and tools utilized. Specify which tests were conducted manually and which were automated, highlighting the rationale behind these choices.
