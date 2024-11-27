@@ -27,4 +27,4 @@ to install this app either use the dev containers to create a test environment o
 | Unit Testing       | pytest                    |
 | accessibility      | lighthouse                |
 | linting/formatting | ruff (with github action) |
-| load testing       | locust                    |
+| load testing       | Jmeter                    |
