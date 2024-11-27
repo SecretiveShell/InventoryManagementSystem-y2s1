@@ -28,3 +28,4 @@ to install this app either use the dev containers to create a test environment o
 | accessibility      | lighthouse                |
 | linting/formatting | ruff (with github action) |
 | load testing       | Jmeter                    |
+| Security           | OWASP Zap                 |
