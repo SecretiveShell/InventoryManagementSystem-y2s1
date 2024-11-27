@@ -30,9 +30,9 @@ JMeter will used to carry out load testing
 To ensure comprehensive testing, a mix of manual and automated testing approaches were employed. Unit tests were conducted using the pytest framework to validate the individual functions tied to button operations, ensuring the correct response to user input. Manual testing was carried out to evaluate the user interface's responsiveness and overall usability on a web browser.
 
 ## Testing Tools:
-<br>Unit Testing: pytest
-<br>Linting/Formatting: ruff (integrated with GitHub Actions for automated CI/CD pipeline)
-<br>Accessibility: Lighthouse for automated accessibility checks
+- Unit Testing: pytest
+- Linting/Formatting: ruff (integrated with GitHub Actions for automated CI/CD pipeline)
+- Accessibility: Lighthouse for automated accessibility checks
 
        
 ## Objectives
