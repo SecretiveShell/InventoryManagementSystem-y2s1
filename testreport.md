@@ -23,13 +23,15 @@ Briefly Describe the report's purpose.
 To evaluate the reliability of the functionalities of different user interaction pages: Sign Up, Log-In, Reset Password, and Invoices Pages. This testing process aims to ensure that these buttons perform as expected across multiple devices, web browsers, and under various conditions to provide a smooth user experience 
 Test strategy
 Provide a clear overview of your application's testing approach, detailing the methods and tools utilized. Specify which tests were conducted manually and which were automated, highlighting the rationale behind these choices.
+
 Zap will be utilised to carry out rigorous testing of the different components 
 JMeter will used to carry out load testing  
 To ensure comprehensive testing, a mix of manual and automated testing approaches were employed. Unit tests were conducted using the pytest framework to validate the individual functions tied to button operations, ensuring the correct response to user input. Manual testing was carried out to evaluate the user interface's responsiveness and overall usability on a web browser.
-Testing Tools:
-Unit Testing: pytest
-Linting/Formatting: ruff (integrated with GitHub Actions for automated CI/CD pipeline)
-Accessibility: Lighthouse for automated accessibility checks
+
+## Testing Tools:
+<br>Unit Testing: pytest
+<br>Linting/Formatting: ruff (integrated with GitHub Actions for automated CI/CD pipeline)
+<br>Accessibility: Lighthouse for automated accessibility checks
 
        
 ## Objectives
