@@ -1,132 +1,136 @@
 body {
-    font-family: 'Verdana', sans-serif;
-    background-color: #f4f7fa;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    color: #2c3e50;
+  font-family: "Verdana", sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  color: #2c3e50;
 }
 
 .header {
-    background-color: #34495e;
-    padding: 10px;
-    text-align: center;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  background-color: #34495e;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header a {
-    color: #ecf0f1;
-    text-decoration: none;
-    margin: 5px;
-    font-size: 14px;
-    transition: color 0.3s ease;
+  color: #ecf0f1;
+  text-decoration: none;
+  margin: 5px;
+  font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .header a:hover {
-    color: #f39c12;
+  color: #f39c12;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
 }
 
 .content h1 {
-    font-size: 32px;
-    color: #2c3e50;
-    font-weight: 700;
-    margin-bottom: 15px;
-    text-align: center;
+  font-size: 32px;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .content h2 {
-    font-size: 22px;
-    color: #7f8c8d;
-    font-weight: 500;
-    margin-bottom: 25px;
-    text-align: center;
+  font-size: 22px;
+  color: #7f8c8d;
+  font-weight: 500;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 .books-image {
-    width: 85%;
-    max-width: 350px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  max-width: 350px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .login-form {
-    background-color: #ffffff;
-    border: 2px solid #bdc3c7;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 95%;
-    max-width: 340px;
-    text-align: center;
+  background-color: #ffffff;
+  border: 2px solid #bdc3c7;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  max-width: 340px;
+  text-align: center;
 }
 
 .login-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #34495e;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #34495e;
 }
 
 .login-form input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #bdc3c7;
-    border-radius: 8px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .login-form input:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-    outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+  outline: none;
 }
 
 .button {
-    background-color: #e74c3c;
-    color: white;
-    padding: 12px;
-    margin: 15px 0;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 18px;
-    width: 100%;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px;
+  margin: 15px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 18px;
+  width: 100%;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .button:hover {
-    background-color: #c0392b;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  background-color: #c0392b;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .register-link {
-    font-size: 14px;
-    color: #3498db;
-    text-decoration: none;
-    margin-top: 10px;
-    display: inline-block;
-    font-weight: 500;
+  font-size: 14px;
+  color: #3498db;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 500;
 }
 
 .register-link:hover {
-    text-decoration: underline;
-    color: #2980b9;
+  text-decoration: underline;
+  color: #2980b9;
 }

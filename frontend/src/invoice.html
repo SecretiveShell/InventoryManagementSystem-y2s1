@@ -1,78 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice</title>
-    <link rel="stylesheet" href="./css/invoice.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/invoice.css" />
+  </head>
+  <body>
     <div class="container">
-        <!-- Navigation Bar -->
-        <nav class="navbar">
-            <button>Browse</button>
-            <button>Cart</button>
-            <button>Log Out</button>
-        </nav>
+      <!-- Navigation Bar -->
+      <nav class="navbar">
+        <button>Browse</button>
+        <button>Cart</button>
+        <button>Log Out</button>
+      </nav>
 
-        <header>
-            <h1>invoice</h1>
-        </header>
-        
-        <section class="invoice-details">
-            <h2>Invoice</h2>
-            <p><strong>Date:</strong> 15 March 2050</p>
-        </section>
+      <header>
+        <h1>invoice</h1>
+      </header>
 
-        <section class="billing-info">
-            <div>
-                <h3>Billed to</h3>
-                <p>addr line 1<br>addr line 2<br>postcode</p>
-            </div>
-            <div>
-                <h3>From</h3>
-                <p>addr line 1<br>addr line 2<br>postcode</p>
-            </div>
-        </section>
+      <section class="invoice-details">
+        <h2>Invoice</h2>
+        <p><strong>Date:</strong> 15 March 2050</p>
+      </section>
 
-        <section class="item-table">
-            <table>
-                <tr>
-                    <th>Book</th>
-                    <th>ISBN</th>
-                    <th>QTY</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
-                </tr>
-                <tr>
-                    <td>xyz</td>
-                    <td>xyz</td>
-                    <td>1</td>
-                    <td>£10</td>
-                    <td>£10</td>
-                </tr>
-                <tr>
-                    <td>xyz</td>
-                    <td>xyz</td>
-                    <td>2</td>
-                    <td>£10</td>
-                    <td>£20</td>
-                </tr>
-                <tr>
-                    <td colspan="4" class="total-label">Total</td>
-                    <td>£30</td>
-                </tr>
-            </table>
-        </section>
-
-        <section class="payment-info">
-            <p><strong>Payment Method:</strong> Cash</p>
-            <p><strong>Note:</strong> n/a</p>
-        </section>
-
-        <div class="print-button">
-            <button onclick="window.print()">Print</button>
+      <section class="billing-info">
+        <div>
+          <h3>Billed to</h3>
+          <p>addr line 1<br />addr line 2<br />postcode</p>
         </div>
+        <div>
+          <h3>From</h3>
+          <p>addr line 1<br />addr line 2<br />postcode</p>
+        </div>
+      </section>
+
+      <section class="item-table">
+        <table>
+          <tr>
+            <th>Book</th>
+            <th>ISBN</th>
+            <th>QTY</th>
+            <th>Price</th>
+            <th>Total Price</th>
+          </tr>
+          <tr>
+            <td>xyz</td>
+            <td>xyz</td>
+            <td>1</td>
+            <td>£10</td>
+            <td>£10</td>
+          </tr>
+          <tr>
+            <td>xyz</td>
+            <td>xyz</td>
+            <td>2</td>
+            <td>£10</td>
+            <td>£20</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="total-label">Total</td>
+            <td>£30</td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="payment-info">
+        <p><strong>Payment Method:</strong> Cash</p>
+        <p><strong>Note:</strong> n/a</p>
+      </section>
+
+      <div class="print-button">
+        <button onclick="window.print()">Print</button>
+      </div>
     </div>
-</body>
+  </body>
 </html>

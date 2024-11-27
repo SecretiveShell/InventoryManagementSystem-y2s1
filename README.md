@@ -5,6 +5,7 @@ An inventory management system designed as part of the SWQ course at university.
 ## technologies used
 
 ### Backend
+
 - FastAPI
 - SQLAlchemy
 - Redis
@@ -12,6 +13,7 @@ An inventory management system designed as part of the SWQ course at university.
 - postgreSQL
 
 ### Frontend
+
 - html
 - css
 - javascript

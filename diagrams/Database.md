@@ -1,4 +1,4 @@
-# database diagram 
+# database diagram
 
 ```mermaid
 erDiagram

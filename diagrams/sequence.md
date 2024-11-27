@@ -31,6 +31,7 @@ sequenceDiagram
 ```
 
 ## Add new product
+
 ```mermaid
 sequenceDiagram
     actor Clerk
@@ -61,6 +62,7 @@ sequenceDiagram
 ```
 
 ## Remove a product
+
 ```mermaid
 sequenceDiagram
     actor Clerk
@@ -70,14 +72,14 @@ sequenceDiagram
 
     Clerk ->> ui: Opens the system
     ui -->> Clerk: Displays Login Page
-    
+
     Clerk ->> ui: Enters login details
     ui ->> API: Sends login credentials
     API ->> rdb: Validates credentials
     rdb -->> API: Returns validation result (success/failure)
     API -->> ui: Sends login result
     ui -->> Clerk: Displays Browse Page (if login successful)
-    
+
     Clerk ->> ui: Opens Browse Page
     ui -->> Clerk: Displays list of products
 
@@ -88,4 +90,3 @@ sequenceDiagram
     API -->> ui: Success response
     ui -->> Clerk: Displays "Product removed successfully" pop-up
 ```
-

@@ -1,4 +1,3 @@
-
 ```mermaid
 C4Container
     title Books Inventory Management System

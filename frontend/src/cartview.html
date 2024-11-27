@@ -1,97 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cart</title>
-    <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="./inventory.html">
-            <div>
-                <button>Browse</button>
-            </div>
-        </a>
-
+      <a href="./inventory.html">
         <div>
-            <button>Cart</button>
-            <button>My Account</button>
-            <button>Log Out</button>
+          <button>Browse</button>
         </div>
+      </a>
+
+      <div>
+        <button>Cart</button>
+        <button>My Account</button>
+        <button>Log Out</button>
+      </div>
     </nav>
     <h1 class="title">Books4Bucks</h1>
     <!-- Cart Section -->
     <div class="cart-container">
-        <h1>Cart</h1>
+      <h1>Cart</h1>
 
-        <table id="cart-table">
-            <thead>
-                <tr>
-                    <th>Book</th>
-                    <th>ISBN</th>
-                    <th>Price</th>
-                    <th>QTY</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Book A</td>
-                    <td>12345</td>
-                    <td>£10</td>
-                    <td>
-                        <div class="quantity-controls">
-                            <button class="qty-btn" onclick="decreaseQty(this)">-</button>
-                            <span class="qty-display">1</span>
-                            <button class="qty-btn" onclick="increaseQty(this)">+</button>
-                        </div>
-                    </td>
-                    <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>Book B</td>
-                    <td>67890</td>
-                    <td>£15</td>
-                    <td>
-                        <div class="quantity-controls">
-                            <button class="qty-btn" onclick="decreaseQty(this)">-</button>
-                            <span class="qty-display">2</span>
-                            <button class="qty-btn" onclick="increaseQty(this)">+</button>
-                        </div>
-                    </td>
-                    <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
-                </tr>
-            </tbody>
-        </table>
+      <table id="cart-table">
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th>QTY</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Book A</td>
+            <td>12345</td>
+            <td>£10</td>
+            <td>
+              <div class="quantity-controls">
+                <button class="qty-btn" onclick="decreaseQty(this)">-</button>
+                <span class="qty-display">1</span>
+                <button class="qty-btn" onclick="increaseQty(this)">+</button>
+              </div>
+            </td>
+            <td>
+              <button class="remove-btn" onclick="removeRow(this)">
+                Remove
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Book B</td>
+            <td>67890</td>
+            <td>£15</td>
+            <td>
+              <div class="quantity-controls">
+                <button class="qty-btn" onclick="decreaseQty(this)">-</button>
+                <span class="qty-display">2</span>
+                <button class="qty-btn" onclick="increaseQty(this)">+</button>
+              </div>
+            </td>
+            <td>
+              <button class="remove-btn" onclick="removeRow(this)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div class="actions">
-            <button class="stock-btn" onclick="removeFromStock()">Clear Cart</button>
-            <button class="invoice-link" onclick="window.location.href='invoice.html'">Create Invoice</button>
-        </div>
+      <div class="actions">
+        <button class="stock-btn" onclick="removeFromStock()">
+          Clear Cart
+        </button>
+        <button
+          class="invoice-link"
+          onclick="window.location.href='invoice.html'"
+        >
+          Create Invoice
+        </button>
+      </div>
     </div>
 
     <script src="./js/cartview.js"></script>
-</body>
+  </body>
 </html>
-# Books4Bucks {#books4bucks .title}
-
-::: search-container
-:::
-
-  ISBN No             Title                                       Quantity   Price   Location    Author            Actions
-  ------------------- ------------------------------------------- ---------- ------- ----------- ----------------- ---------
-  978-0-141-18785-5   1984                                        25         £8.99   Sheffield   George Orwell     Edit | Add to Basket
-  978-0-261-10320-7   The Hobbit                                  18         £7.99   Leeds       J.R.R. Tolkien    Edit | Add to Basket
-  978-0-747-54624-4   Harry Potter and the Philosopher\'s Stone   30         £6.99   Doncaster   J.K. Rowling      Edit | Add to Basket
-  978-0-099-54913-6   Pride and Prejudice                         15         £5.99   Sheffield   Jane Austen       Edit | Add to Basket
-  978-0-008-32741-7   Murder on the Orient Express                20         £7.49   Leeds       Agatha Christie   Edit | Add to Basket
-  978-0-141-04931-3   Great Expectations                          12         £6.49   Doncaster   Charles Dickens   Edit | Add to Basket
-  978-0-141-18287-4   The Catcher in the Rye                      22         £8.49   Sheffield   J.D. Salinger     Edit | Add to Basket
-
-::: pagination
-Previous
-
-Next
-:::
+# Books4Bucks {#books4bucks .title} ::: search-container ::: ISBN No Title
+Quantity Price Location Author Actions -------------------
+------------------------------------------- ---------- ------- -----------
+----------------- --------- 978-0-141-18785-5 1984 25 £8.99 Sheffield George
+Orwell Edit | Add to Basket 978-0-261-10320-7 The Hobbit 18 £7.99 Leeds J.R.R.
+Tolkien Edit | Add to Basket 978-0-747-54624-4 Harry Potter and the
+Philosopher\'s Stone 30 £6.99 Doncaster J.K. Rowling Edit | Add to Basket
+978-0-099-54913-6 Pride and Prejudice 15 £5.99 Sheffield Jane Austen Edit | Add
+to Basket 978-0-008-32741-7 Murder on the Orient Express 20 £7.49 Leeds Agatha
+Christie Edit | Add to Basket 978-0-141-04931-3 Great Expectations 12 £6.49
+Doncaster Charles Dickens Edit | Add to Basket 978-0-141-18287-4 The Catcher in
+the Rye 22 £8.49 Sheffield J.D. Salinger Edit | Add to Basket ::: pagination
+Previous Next :::

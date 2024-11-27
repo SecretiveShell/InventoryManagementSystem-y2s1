@@ -7,17 +7,20 @@ This is the Books4Bucks Inventory Management System, built using FastAPI as the 
 ## Components
 
 ### main.py
+
 - **Functionality**: Initializes the FastAPI application and includes the router to handle API requests.
 - **Key Elements**:
   - `app`: FastAPI instance configured with a title and description.
   - `app.include_router(router)`: Includes the router defined in the `routes` module to handle API endpoints.
 
 ### start.py
+
 - **Functionality**: Contains the command to run the FastAPI application using Uvicorn.
 - **Key Elements**:
   - `uvicorn.run("main:app")`: Starts the FastAPI app with the specified module and app instance.
 
 ### database/ORM.py
+
 - **Functionality**: Defines the ORM models and logic to create tables in the PostgreSQL database.
 - **Key Elements**:
   - `Base`: Declarative base class for ORM models.
@@ -37,6 +40,7 @@ This is the Books4Bucks Inventory Management System, built using FastAPI as the 
     - Creates all tables defined in the ORM models.
 
 ### models/author.py
+
 - **Functionality**: Defines Pydantic models for author data validation and serialization.
 - **Key Elements**:
   - `AuthorBase`: Base model with common fields for authors.
@@ -45,6 +49,7 @@ This is the Books4Bucks Inventory Management System, built using FastAPI as the 
   - `AuthorDeleteResponse`: Model for author deletion response data.
 
 ### models/book.py
+
 - **Functionality**: Defines Pydantic models for book data validation and serialization.
 - **Key Elements**:
   - `BookBase`: Base model with common fields for books.
@@ -52,6 +57,7 @@ This is the Books4Bucks Inventory Management System, built using FastAPI as the 
   - `BookCreate`: Model for creating new books, extending `BookBase`.
 
 ### models/orders.py
+
 - **Functionality**: Defines Pydantic models for order data validation and serialization.
 - **Key Elements**:
   - `OrderBase`: Base model with common fields for orders.
@@ -63,6 +69,7 @@ This is the Books4Bucks Inventory Management System, built using FastAPI as the 
 ## Running the Backend
 
 To run the backend, execute the following command in the terminal:
+
 ```bash
 python start.py
 ```

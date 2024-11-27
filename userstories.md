@@ -180,7 +180,6 @@ Acceptance Criteria:
     </tr>
 </table>
 
-
 <table>
     <tr>
         <td colspan="2"><strong>Jane Doe</strong></td>
@@ -278,4 +277,3 @@ Acceptance Criteria:
         </td>
     </tr>
 </table>
-
