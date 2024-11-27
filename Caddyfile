@@ -1,0 +1,7 @@
+:2250
+
+reverse_proxy /api/* localhost:8000
+
+file_server {
+    root frontend/src
+}
