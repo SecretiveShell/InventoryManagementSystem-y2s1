@@ -22,6 +22,5 @@ function removeRow(button) {
 function removeFromStock() {
     const tableBody = document.getElementById('cart-table').querySelector('tbody');
     tableBody.innerHTML = ''; // Clear the entire cart
-    alert('All items removed from cart.');
 }
 
