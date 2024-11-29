@@ -8,5 +8,5 @@ def client():
     Fixture to create a TestClient for FastAPI app.
     Scope set to "session" so the client is shared across all tests.
     """
-    client = httpx.Client(base_url="http://localhost:8000")
+    client = httpx.Client(base_url="http://localhost:8080")
     yield client
