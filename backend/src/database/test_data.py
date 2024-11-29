@@ -1,18 +1,24 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy_utils import create_database, drop_database
 from URI import DATABASE_URI
-from ORM import Base, Book
+from ORM import Base, Book, Inventory
 
 engine = create_engine(DATABASE_URI)
-if not database_exists(engine.url):
-    create_database(engine.url)
+
+try:
+    drop_database(engine.url)
+except:
+    print("Database does not exist -- not dropping")
+
+create_database(engine.url)
 
 Base.metadata.create_all(engine)
 
 print("Tables created successfully.")
 
 # Create test data
+session = Session(bind=engine)
 
 # Books
 book1 = Book(
@@ -59,11 +65,27 @@ book6 = Book(
 )
 
 # add the books to the database
-session = Session(bind=engine)
 session.add(book1)
 session.add(book2)
 session.add(book3)
 session.add(book4)
 session.add(book5)
 session.add(book6)
+
+# Inventory
+inventory1 = Inventory(book=book1, quantity_in_stock=10, price=12.99)
+inventory2 = Inventory(book=book2, quantity_in_stock=5, price=14.99)
+inventory3 = Inventory(book=book3, quantity_in_stock=15, price=9.99)
+inventory4 = Inventory(book=book4, quantity_in_stock=20, price=8.99)
+inventory5 = Inventory(book=book5, quantity_in_stock=30, price=7.99)
+inventory6 = Inventory(book=book6, quantity_in_stock=40, price=6.99)
+
+# add the inventory to the database
+session.add(inventory1)
+session.add(inventory2)
+session.add(inventory3)
+session.add(inventory4)
+session.add(inventory5)
+session.add(inventory6)
+
 session.commit()
