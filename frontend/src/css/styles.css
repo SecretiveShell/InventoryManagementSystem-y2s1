@@ -56,6 +56,7 @@ body {
 /* Table Styles */
 table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -67,6 +68,14 @@ td {
   padding: 12px;
   text-align: left;
 }
+th:nth-child(1), td:nth-child(1) { width: 15%; }   /* ISBN */
+th:nth-child(2), td:nth-child(2) { width: 40%; }   /* Title */
+th:nth-child(3), td:nth-child(3) { width: 7.5%; }   /* Quantity */
+th:nth-child(4), td:nth-child(4) { width: 7.5%; }   /* Price */
+th:nth-child(5), td:nth-child(5) { width: 10%; }   /* Location */
+th:nth-child(6), td:nth-child(6) { width: 11%; }   /* Author */
+th:nth-child(7), td:nth-child(7) { width: 7%; }    /* Edit */
+th:nth-child(8), td:nth-child(8) { width: 7%; }    /* Add to Basket */
 
 th {
   background-color: #f2f2f2;
