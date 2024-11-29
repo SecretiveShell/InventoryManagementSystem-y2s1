@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from database.session import Session
 from database.ORM import Book
 from models.book import BookInstance
+from models.inventory import InventoryItem
 from auth.login import get_admin_depends
 from openapi_tags import OpenAPITags
 

@@ -50,21 +50,51 @@ document.querySelectorAll(".edit-btn").forEach((button) => {
 
 // add items to list
 
-// FIXME: this needs better testing
 (async () => {
-response = await fetch("/api/inventory/list");
-const books = await response.json();
+  const response = await fetch("/api/inventory/list");
+  const books = await response.json();
 
-books.forEach((book) => {
-  row = document.createElement("tr");
-  row.createElement("td").textContent = book.isbn;
-  row.createElement("td").textContent = book.title;
-  row.createElement("td").textContent = book.quantity;
-  row.createElement("td").textContent = book.price;
-  row.createElement("td").textContent = book.location;
-  row.createElement("td").textContent = book.author;
-  row.createElement("td").createElement("button").textContent = "Edit";
-  row.createElement("td").createElement("button").textContent = "Add to Basket";
-  document.getElementById("book-table").appendChild(row);
-});
+  books.forEach((book) => {
+    const row = document.createElement("tr");
+
+    const isbnCell = document.createElement("td");
+    isbnCell.textContent = book.ISBN;
+    row.appendChild(isbnCell);
+
+    const titleCell = document.createElement("td");
+    titleCell.textContent = book.title;
+    row.appendChild(titleCell);
+
+    const quantityCell = document.createElement("td");
+    quantityCell.textContent = book.quantity;
+    row.appendChild(quantityCell);
+
+    const priceCell = document.createElement("td");
+    priceCell.textContent = book.price;
+    row.appendChild(priceCell);
+
+    const locationCell = document.createElement("td");
+    locationCell.textContent = book.location;
+    row.appendChild(locationCell);
+
+    const authorCell = document.createElement("td");
+    authorCell.textContent = book.author;
+    row.appendChild(authorCell);
+
+    const editButtonCell = document.createElement("td");
+    const editButton = document.createElement("button");
+    editButton.classList.add("edit-btn");
+    editButton.textContent = "Edit";
+    editButtonCell.appendChild(editButton);
+    row.appendChild(editButtonCell);
+
+    const addButtonCell = document.createElement("td");
+    const addButton = document.createElement("button");
+    addButton.classList.add("add-to-basket-btn");
+    addButton.textContent = "Add to Basket";
+    addButtonCell.appendChild(addButton);
+    row.appendChild(addButtonCell);
+
+    document.getElementById("book-table").appendChild(row);
+  });
 })();
