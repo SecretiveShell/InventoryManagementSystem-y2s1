@@ -8,7 +8,7 @@ engine = create_engine(DATABASE_URI)
 
 try:
     drop_database(engine.url)
-except:
+except Exception:
     print("Database does not exist -- not dropping")
 
 create_database(engine.url)
