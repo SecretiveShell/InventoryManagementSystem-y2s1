@@ -37,6 +37,9 @@ jobs:
       - name: Setup Database Tables
         run: |
           python backend/src/database/test_data.py
+        
+        env:
+          B4B_DB_HOST: localhost
       
       - name: Run Tests
         run: |
@@ -44,4 +47,7 @@ jobs:
           sleep 5
           cd backend/src
           pytest *
+        
+        env:
+          B4B_DB_HOST: localhost
             
