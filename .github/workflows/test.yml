@@ -32,11 +32,6 @@ jobs:
 
       - name: Setup PostgreSQL
         uses: Daniel-Marynicz/postgresql-action@1.0.0
-        with:
-          postgresql_version: 14
-          postgresql_db: testdb
-          postgresql_user: testuser
-          postgresql_password: testpassword
 
       - name: Setup Database Tables
         run: |
@@ -44,9 +39,9 @@ jobs:
         env:
           B4B_DB_HOST: localhost
           B4B_DB_PORT: 5432
-          B4B_DB_USER: testuser
-          B4B_DB_PASSWORD: testpassword
-          B4B_DB_NAME: testdb
+          B4B_DB_USER: postgres
+          B4B_DB_PASSWORD: postgres
+          B4B_DB_NAME: db
 
       - name: Run Tests
         run: |
@@ -57,6 +52,6 @@ jobs:
         env:
           B4B_DB_HOST: localhost
           B4B_DB_PORT: 5432
-          B4B_DB_USER: testuser
-          B4B_DB_PASSWORD: testpassword
-          B4B_DB_NAME: testdb
+          B4B_DB_USER: postgres
+          B4B_DB_PASSWORD: postgres
+          B4B_DB_NAME: db
