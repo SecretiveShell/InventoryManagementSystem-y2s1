@@ -33,5 +33,7 @@ async def login(login: LoginRequest) -> LoginResponse:
 
 
 @router.post("/logout")
-async def logout(success: Annotated[Literal[True], Depends(delete_session)]) -> Literal[True]:
+async def logout(
+    success: Annotated[Literal[True], Depends(delete_session)],
+) -> Literal[True]:
     return success

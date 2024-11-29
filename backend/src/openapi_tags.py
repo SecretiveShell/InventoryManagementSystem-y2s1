@@ -1,5 +1,6 @@
 from enum import StrEnum
 
+
 class OpenAPITags(StrEnum):
     users = "users"
     auth = "auth"
@@ -7,6 +8,7 @@ class OpenAPITags(StrEnum):
     authors = "authors"
     inventory = "inventory"
     orders = "orders"
+
 
 tag_metadata = [
     # {

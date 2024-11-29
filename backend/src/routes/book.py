@@ -76,7 +76,9 @@ def get_book(book_id: int) -> BookResponse:
 
 
 @router.put("/{book_id}", response_model=BookResponse)
-def update_book(user: get_admin_depends, book_id: int, book: BookCreate) -> BookResponse:
+def update_book(
+    user: get_admin_depends, book_id: int, book: BookCreate
+) -> BookResponse:
     """
     Update a book by ID.
 

@@ -77,7 +77,9 @@ def get_author(author_id: int) -> AuthorResponse:
 
 
 @router.put("/{author_id}", response_model=AuthorResponse)
-def update_author(user: get_admin_depends,author_id: int, author: AuthorCreate) -> AuthorResponse:
+def update_author(
+    user: get_admin_depends, author_id: int, author: AuthorCreate
+) -> AuthorResponse:
     """
     Update an author by ID.
 
