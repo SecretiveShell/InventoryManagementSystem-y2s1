@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
+from sqlalchemy import func
 from database.session import Session
 from database.ORM import Book
 from models.book import BookInstance
-from models.inventory import InventoryItem
 from auth.login import get_admin_depends
 from openapi_tags import OpenAPITags
 
@@ -13,18 +13,54 @@ router = APIRouter(
 
 
 @router.get("/list")
-async def view_inventory() -> list[BookInstance]:
+async def view_inventory(
+    page: int = 1,  # Page number, minimum 1
+    page_size: int = 7,  # Default 7 items per page, max 100
+) -> dict:
     """
-    Retrieve a list of all books in the store inventory.
+    Retrieve a paginated list of books in the store inventory.
+
+    Args:
+        page (int, optional): The page number to retrieve. Defaults to 1.
+        page_size (int, optional): Number of items per page. Defaults to 7.
 
     Returns:
-        list[BookInstance]: A list of BookInstance objects representing the books in the inventory.
+        dict: A dictionary containing:
+            - books: List of BookInstance objects for the current page
+            - total_books: Total number of books in the inventory
+            - current_page: Current page number
+            - total_pages: Total number of pages
     """
     with Session() as session:
-        books = session.query(Book).all()
-        return [
-            BookInstance.model_validate(book, from_attributes=True) for book in books
+        # Count total books
+        total_books = session.query(func.count(Book.book_id)).scalar()
+        
+        # Calculate total pages
+        total_pages = (total_books + page_size - 1) // page_size
+        
+        # Calculate offset
+        offset = (page - 1) * page_size
+        
+        # Retrieve books for the current page
+        books = (
+            session.query(Book)
+            .offset(offset)
+            .limit(page_size)
+            .all()
+        )
+        
+        # Convert to BookInstance
+        book_instances = [
+            BookInstance.model_validate(book, from_attributes=True) 
+            for book in books
         ]
+        
+        return {
+            "books": book_instances,
+            "total_books": total_books,
+            "current_page": page,
+            "total_pages": total_pages
+        }
 
 
 @router.get("/{book_id}")
