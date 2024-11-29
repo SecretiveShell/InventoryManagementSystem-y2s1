@@ -45,8 +45,8 @@ jobs:
 
       - name: Run Tests
         run: |
-          uvicorn main:app --app-dir backend/src --port 8081 &
-          sleep 5
+          nohup uvicorn main:app --app-dir backend/src --port 8081
+          sleep 10
           cd backend/src
           pytest *
         env:
