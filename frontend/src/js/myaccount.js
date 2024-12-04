@@ -69,3 +69,26 @@ function validatePassword(password) {
 
     return { isValid: true };
 }
+
+// Navigation button handlers
+document.querySelectorAll('nav button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const buttonText = e.target.textContent.toLowerCase().trim();
+        
+        switch(buttonText) {
+            case 'browse':
+                window.location.href = 'inventory.html';
+                break;
+            case 'cart':
+                window.location.href = 'cartview.html';
+                break;
+            case 'my account':
+                window.location.href = 'myaccount.html';
+                break;
+            case 'log out':
+                handleLogout();
+                break;
+        }
+    });
+});
+
