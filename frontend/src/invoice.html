@@ -21,17 +21,18 @@
 
       <section class="invoice-details">
         <h2>Invoice</h2>
-        <p><strong>Date:</strong> 15 March 2050</p>
+        <label for="invoice-date"><strong>Date:</strong></label>
+        <input type="date" id="invoice-date" value="2050-03-15">
       </section>
 
       <section class="billing-info">
         <div>
           <h3>Billed to</h3>
-          <p>addr line 1<br />addr line 2<br />postcode</p>
+          <textarea rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
         </div>
         <div>
           <h3>From</h3>
-          <p>addr line 1<br />addr line 2<br />postcode</p>
+          <textarea rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
         </div>
       </section>
 
@@ -77,3 +78,4 @@
     <script src="./js/invoice.js"></script>
   </body>
 </html>
+
