@@ -28,11 +28,11 @@
       <section class="billing-info">
         <div>
           <h3>Billed to</h3>
-          <textarea rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
+          <textarea id="billed-to" rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
         </div>
         <div>
           <h3>From</h3>
-          <textarea rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
+          <textarea id="from-address" rows="3">addr line 1&#10;addr line 2&#10;postcode</textarea>
         </div>
       </section>
 
@@ -72,7 +72,7 @@
       </section>
 
       <div class="print-button">
-        <button onclick="window.print()">Print</button>
+        <button onclick="printInvoice()">Print</button>
       </div>
     </div>
     <script src="./js/invoice.js"></script>
