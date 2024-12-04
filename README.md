@@ -22,7 +22,7 @@ An inventory management system designed as part of the SWQ course at university.
 
 to install this app either use the dev containers to create a test environment or use docker compose to build the containers
 
-To run the full stack, including the backend and frontend, execute the following commands:
+To run the full stack, including the backend and frontend, run `./start.sh` or execute the following commands:
 
 ```bash
 uvicorn main:app --reload --app-dir backend/src

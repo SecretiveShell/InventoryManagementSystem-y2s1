@@ -27,7 +27,11 @@
 
 	"postStartCommand": "python backend/src/database/ORM.py",
 
-	"postAttachCommand": "git fetch --all",
+	"postAttachCommand": 
+		{
+			"git": "git fetch --all",
+			"servers" : "./start.sh"
+		},	
 
 	"customizations": {
 		"vscode": {
