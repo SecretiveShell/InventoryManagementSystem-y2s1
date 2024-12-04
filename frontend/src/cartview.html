@@ -5,93 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cart</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    
+    <script src="./js/cartview.js" defer></script>
+  </head>
   </head>
   <body>
-    <!-- Navigation Bar -->
+
     <body>
-      <nav class="navbar">
-        <a href="inventory.html">
-          <div>
-            <button>Browse</button>
-          </div>
-        </a>
-  
+      <nav class="navbar"> 
         <div>
-          <a href="cartview.html">
-            <button>Cart</button>
-          </a>
-          <a href="myaccount.html">
-          <button>My Account</button>
-        </a>
-          <button>Log Out</button>
+          <button>Browse</button>
         </div>
-      </nav>
+      </a>
+
+      <div>
+          <button>Cart</button>
+        <button>My Account</button>
+        <button>Log Out</button>
+      </div>
+    </nav>
     <h1 class="title">Books4Bucks</h1>
     <!-- Cart Section -->
-    <div class="cart-container">
-      <h1>Cart</h1>
-
+    <div id="cart-container">
       <table id="cart-table">
-        <thead>
-          <tr>
-            <th>Book</th>
-            <th>ISBN</th>
-            <th>Price</th>
-            <th>QTY</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Book A</td>
-            <td>12345</td>
-            <td>£10</td>
-            <td>
-              <div class="quantity-controls">
-                <button class="qty-btn" onclick="decreaseQty(this)">-</button>
-                <span class="qty-display">1</span>
-                <button class="qty-btn" onclick="increaseQty(this)">+</button>
-              </div>
-            </td>
-            <td>
-              <button class="remove-btn" onclick="removeRow(this)">
-                Remove
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Book B</td>
-            <td>67890</td>
-            <td>£15</td>
-            <td>
-              <div class="quantity-controls">
-                <button class="qty-btn" onclick="decreaseQty(this)">-</button>
-                <span class="qty-display">2</span>
-                <button class="qty-btn" onclick="increaseQty(this)">+</button>
-              </div>
-            </td>
-            <td>
-              <button class="remove-btn" onclick="removeRow(this)">
-                Remove
-              </button>
-            </td>
-          </tr>
-        </tbody>
+          <thead>
+              <tr>
+                  <th>Book</th>
+                  <th>ISBN</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody></tbody>
       </table>
-
-      <div class="actions">
-        <button class="stock-btn" onclick="removeFromStock()">
-          Clear Cart
-        </button>
-        <button
-          class="invoice-link"
-          onclick="window.location.href='invoice.html'"
-        >
-          Create Invoice
-        </button>
+      <div class="cart-actions">
+          <button id="clear-cart">Clear Cart</button>
+          <button id="create-invoice">Create Invoice (£0.00)</button>
       </div>
-    </div>
-
-    <script src="./js/cartview.js"></script>
-  </body>
+  </div>
+</body>
 </html>
