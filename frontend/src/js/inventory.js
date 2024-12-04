@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.innerHTML = `
                 <td>${book.ISBN}</td>
                 <td>${book.title}</td>
-                <td>${book.quantity}</td>
+                <td>${book.quantity_in_stock}</td>
                 <td>£${book.price}</td>
                 <td>${book.location}</td>
                 <td>${book.author}</td>
@@ -178,6 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial load of books
     loadBooks(1);
 });
+
+
 
 // Edit button functionality
 function addBookActionListeners() {
