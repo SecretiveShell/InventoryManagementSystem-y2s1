@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>£${book.price}</td>
                 <td>${book.location}</td>
                 <td>${book.author}</td>
-                <td><button class="edit-btn" data-book='${JSON.stringify(book)}'>Edit</button></td>
-                <td><button class="add-to-basket-btn" data-book='${JSON.stringify(book)}'>Add to Basket</button></td>
+                <td><button class="edit-btn" data-book="${encodeURIComponent(JSON.stringify(book))}">Edit</button></td>
+                <td><button class="add-to-basket-btn" data-book="${encodeURIComponent(JSON.stringify(book))}">Add to Basket</button></td>
             `;
             bookTableBody.appendChild(row);
         });
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         updatePaginationButtons(currentPage, Math.ceil(
-            (filteredBooks.length > 0 ? filteredBooks.length : totalBooks) / PAGE_SIZE
+            (filteredBooks.length > 0 ? filteredBooks.length : totalPages) / PAGE_SIZE
         ));
     }
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeBookActionButtons() {
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', async (e) => {
-                const bookData = JSON.parse(e.target.dataset.book);
+                const bookData = JSON.parse(decodeURIComponent(e.target.dataset.book));
                 try {
                     localStorage.setItem('currentBook', JSON.stringify(bookData));
                     e.target.textContent = 'Editing...';
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('.add-to-basket-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                const bookData = JSON.parse(e.target.dataset.book);
+                const bookData = JSON.parse(decodeURIComponent(e.target.dataset.book));
                 const cart = JSON.parse(localStorage.getItem('cart')) || [];
                 const existingItem = cart.find(item => item.isbn === bookData.ISBN);
                 
@@ -186,21 +186,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function initializeNavigation() {
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const buttonText = e.target.textContent.toLowerCase().trim();
+                switch(buttonText) {
+                    case 'browse': window.location.href = 'inventory.html'; break;
+                    case 'cart': window.location.href = 'cartview.html'; break;
+                    case 'my account': window.location.href = 'myaccount.html'; break;
+                    case 'log out': handleLogout(); break;
+                }
+            });
+        });
+    }
+
     prevPageBtn.addEventListener('click', handlePagination);
     nextPageBtn.addEventListener('click', handlePagination);
     searchBar.addEventListener("input", performSearch);
 
-    document.querySelectorAll('nav button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const buttonText = e.target.textContent.toLowerCase().trim();
-            switch(buttonText) {
-                case 'browse': window.location.href = 'inventory.html'; break;
-                case 'cart': window.location.href = 'cartview.html'; break;
-                case 'my account': window.location.href = 'myaccount.html'; break;
-                case 'log out': handleLogout(); break;
-            }
-        });
-    });
-
+    initializeNavigation();
     loadBooks(1);
 });

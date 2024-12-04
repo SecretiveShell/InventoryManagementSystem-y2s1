@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       cart.forEach((item, index) => {
           const row = document.createElement('tr');
           row.innerHTML = `
-              <td>${item.title}</td>
               <td>${item.isbn}</td>
+              <td>${item.title}</td>
               <td>£${item.price}</td>
               <td>
                   <button class="qty-btn" data-action="decrease" data-index="${index}">-</button>
@@ -98,8 +98,8 @@ function addToCart(book) {
       existingItem.quantity = (existingItem.quantity || 1) + 1;
   } else {
       cart.push({
-          isbn: book.isbn,
           title: book.title,
+          isbn: book.isbn,
           price: book.price,
           quantity: 1
       });
