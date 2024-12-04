@@ -70,8 +70,8 @@ function validatePassword(password) {
     return { isValid: true };
 }
 
-// Navigation button handlers
-document.querySelectorAll('nav button').forEach(button => {
+ // Navigation button handlers
+ document.querySelectorAll('nav button').forEach(button => {
     button.addEventListener('click', (e) => {
         const buttonText = e.target.textContent.toLowerCase().trim();
         
@@ -92,3 +92,25 @@ document.querySelectorAll('nav button').forEach(button => {
     });
 });
 
+// Logout functionality
+async function handleLogout() {
+    try {
+        const logoutBtn = document.querySelector('button:contains("Log Out")');
+        if (logoutBtn) {
+            logoutBtn.textContent = 'Logging out...';
+            logoutBtn.disabled = true;
+        }
+
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        await fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+    } finally {
+        window.location.href = 'login.html';
+    }
+}

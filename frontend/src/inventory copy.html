@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Books4Bucks - Inventory</title>
+        <link rel="stylesheet" href="./css/styles.css" />
+        <script src="./js/inventory.js" defer></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      
+        <div>
+          <button>Browse</button>
+        </div>
+      </a>
+
+      <div>
+          <button>Cart</button>
+        <button>My Account</button>
+        <button>Log Out</button>
+      </div>
+    </nav>
+    <h1 class="title">Books4Bucks</h1>
+
+    <div class="search-container">
+      <input type="text" id="search-bar" placeholder="Search books..." />
+    </div>
+
+    <table id="book-table">
+      <thead>
+        <tr>
+          <th>ISBN No</th>
+          <th>Title</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Location</th>
+          <th>Author</th>
+          <th>Edit</th>
+          <th>Add to Basket</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button id="prev-page">Previous</button>
+      <button id="next-page">Next</button>
+    </div>
+
+  </body>
+</html>
