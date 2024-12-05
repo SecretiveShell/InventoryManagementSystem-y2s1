@@ -111,6 +111,6 @@ async function handleLogout() {
     } catch (error) {
         console.error('Logout error:', error);
     } finally {
-        window.location.href = 'login.html';
+        window.location.href = 'log-in.html';
     }
 }

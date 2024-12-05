@@ -107,3 +107,26 @@ function addToCart(book) {
   
   localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+// Logout functionality
+async function handleLogout() {
+    try {
+        const logoutBtn = document.querySelector('button:contains("Log Out")');
+        if (logoutBtn) {
+            logoutBtn.textContent = 'Logging out...';
+            logoutBtn.disabled = true;
+        }
+
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        await fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+    } finally {
+        window.location.href = 'log-in.html';
+    }
+}
