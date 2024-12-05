@@ -6,49 +6,103 @@
         <title>Books4Bucks - Inventory</title>
         <link rel="stylesheet" href="./css/styles.css" />
         <script src="./js/inventory.js" defer></script>
-  </head>
-  <body>
-    <nav class="navbar">
-      
-        <div>
-          <button>Browse</button>
+        <style>
+          .search-bar-container {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin: 20px 0;
+          }
+          .search-bar-container input {
+              flex: 1;
+              padding: 10px;
+              font-size: 16px;
+              margin-right: 10px;
+          }
+          .search-bar-container select {
+              padding: 10px;
+              font-size: 16px;
+              margin-right: 10px;
+          }
+          .search-bar-container button {
+              padding: 10px;
+              font-size: 16px;
+              background-color: #007bff;
+              color: white;
+              border: none;
+              cursor: pointer;
+              border-radius: 3px;
+          }
+          .search-bar-container button:hover {
+              background-color: #0056b3;
+          }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div>
+                <button>Browse</button>
+            </div>
+            <div>
+                <button>Cart</button>
+                <button>My Account</button>
+                <button>Log Out</button>
+            </div>
+        </nav>
+        <h1 class="title">Books4Bucks</h1>
+
+        <!-- Search Bar and Price Filter -->
+        <div class="search-bar-container">
+            <input type="text" id="search-bar" placeholder="Search books..." />
+            <select id="price-range" name="price_range">
+                <option value="">-- Price Range --</option>
+                <option value="0-10">Under $10</option>
+                <option value="10-20">$10 - $20</option>
+                <option value="20-50">$20 - $50</option>
+                <option value="50-100">$50 - $100</option>
+                <option value="100+">Above $100</option>
+            </select>
+            <button id="apply-filter">Apply</button>
         </div>
-      </a>
 
-      <div>
-          <button>Cart</button>
-        <button>My Account</button>
-        <button>Log Out</button>
-      </div>
-    </nav>
-    <h1 class="title">Books4Bucks</h1>
+        <!-- Book Table -->
+        <table id="book-table">
+            <thead>
+                <tr>
+                    <th>ISBN No</th>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Location</th>
+                    <th>Author</th>
+                    <th>Edit</th>
+                    <th>Add to Basket</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic content will be added here -->
+            </tbody>
+        </table>
 
-    <div class="search-container">
-      <input type="text" id="search-bar" placeholder="Search books..." />
-    </div>
+        <div class="pagination">
+            <button id="prev-page">Previous</button>
+            <button id="next-page">Next</button>
+        </div>
 
-    <table id="book-table">
-      <thead>
-        <tr>
-          <th>ISBN No</th>
-          <th>Title</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Location</th>
-          <th>Author</th>
-          <th>Edit</th>
-          <th>Add to Basket</th>
-        </tr>
-      </thead>
-      <tbody>
+        <script>
+          // JavaScript to handle search and filter
+          document.getElementById('apply-filter').addEventListener('click', function() {
+              const searchQuery = document.getElementById('search-bar').value;
+              const priceRange = document.getElementById('price-range').value;
 
-      </tbody>
-    </table>
+              if (!searchQuery && !priceRange) {
+                  alert('Please enter a search query or select a price range.');
+                  return;
+              }
 
-    <div class="pagination">
-      <button id="prev-page">Previous</button>
-      <button id="next-page">Next</button>
-    </div>
-
-  </body>
+              alert(`Searching for "${searchQuery}" in price range: ${priceRange || 'All prices'}`);
+              // Add your logic to update the book table here based on search and price filter
+          });
+        </script>
+    </body>
 </html>
