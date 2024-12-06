@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import func
 from database.session import Session
-from database.ORM import Book
+from database.ORM import Book, Inventory  # Added Inventory import
 from models.book import BookInstance
 from auth.login import get_admin_depends
 from openapi_tags import OpenAPITags
@@ -10,7 +10,6 @@ router = APIRouter(
     prefix="/inventory",
     tags=[OpenAPITags.inventory.value],
 )
-
 
 @router.get("/list")
 async def view_inventory(
@@ -41,19 +40,22 @@ async def view_inventory(
         # Calculate offset
         offset = (page - 1) * page_size
         
-        # Retrieve books for the current page
+        # Retrieve books with their inventory information
         books = (
-            session.query(Book)
+            session.query(Book, Inventory)
+            .join(Inventory)
             .offset(offset)
             .limit(page_size)
             .all()
         )
         
-        # Convert to BookInstance
-        book_instances = [
-            BookInstance.model_validate(book, from_attributes=True) 
-            for book in books
-        ]
+        # Convert to BookInstance with inventory data
+        book_instances = []
+        for book, inventory in books:
+            book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+            book_dict["quantity_in_stock"] = inventory.quantity_in_stock
+            book_dict["price"] = inventory.price
+            book_instances.append(BookInstance(**book_dict))
         
         return {
             "books": book_instances,
@@ -61,7 +63,6 @@ async def view_inventory(
             "current_page": page,
             "total_pages": total_pages
         }
-
 
 @router.get("/{book_id}")
 async def view_inventory_for_book(book_id: int) -> BookInstance:

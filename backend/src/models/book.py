@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 
-
 class BookBase(BaseModel):
     title: str = Field(title="title", description="the title of the book")
     genre: str = Field(title="genre", description="the genre of the book")
@@ -17,9 +16,10 @@ class BookBase(BaseModel):
         description="the name of the publisher who published the book",
     )
 
-
 class BookInstance(BookBase):
     book_id: int = Field(title="book id", description="the globally unique book ID")
+    quantity_in_stock: int = Field(default=0, description="current quantity in stock")
+    price: float = Field(default=0.0, description="current price of the book")
 
 
 class BookCreate(BookBase):
