@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy_utils import create_database, drop_database
 from URI import DATABASE_URI
-from ORM import Base, Book, Inventory
+from ORM import Base, Book, Inventory, Author
 
 engine = create_engine(DATABASE_URI)
 
@@ -162,6 +162,59 @@ book20 = Book(
     publisher="HarperCollins",
 )
 
+# example authors
+author1 = Author(
+    name = "Charles Dickens",
+    bio = "some guy who wrote books."
+)
+author2 = Author(
+    name = "Jane Austen",
+    bio = "Famous for her novels exploring the British landed gentry."
+)
+author3 = Author(
+    name = "Mark Twain",
+    bio = "An American author known for 'The Adventures of Tom Sawyer' and 'Adventures of Huckleberry Finn'."
+)
+author4 = Author(
+    name = "George Orwell",
+    bio = "English writer known for his novels '1984' and 'Animal Farm', focusing on social justice and political themes."
+)
+author5 = Author(
+    name = "Virginia Woolf",
+    bio = "English author and modernist, best known for 'Mrs. Dalloway' and 'To the Lighthouse'."
+)
+author6 = Author(
+    name = "F. Scott Fitzgerald",
+    bio = "American novelist best known for 'The Great Gatsby', exploring themes of decadence and the American Dream."
+)
+author7 = Author(
+    name = "J.K. Rowling",
+    bio = "British author famous for creating the Harry Potter series."
+)
+author8 = Author(
+    name = "Hemingway",
+    bio = "American novelist known for his terse writing style and works like 'The Old Man and the Sea' and 'A Farewell to Arms'."
+)
+author9 = Author(
+    name = "Leo Tolstoy",
+    bio = "Russian author of 'War and Peace' and 'Anna Karenina', focusing on philosophical and social issues."
+)
+author10 = Author(
+    name = "Harper Lee",
+    bio = "American author of 'To Kill a Mockingbird', a novel on racial injustice in the Southern United States."
+)
+
+# add the authors to the database
+session.add(author1)
+session.add(author2)
+session.add(author3)
+session.add(author4)
+session.add(author5)
+session.add(author6)
+session.add(author7)
+session.add(author8)
+session.add(author9)
+session.add(author10)
 
 # add the books to the database
 session.add(book1)
