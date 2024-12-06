@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy_utils import create_database, drop_database
 from URI import DATABASE_URI
-from ORM import Base, Book, Inventory, Author
+from ORM import Base, Book, Category, Inventory, Author
 
 engine = create_engine(DATABASE_URI)
 
@@ -162,6 +162,52 @@ book20 = Book(
     publisher="HarperCollins",
 )
 
+# Add new categories to the database
+category1 = Category(
+    name="Kids",
+    description="Books suitable for children, often with simple themes and illustrations."
+)
+category2 = Category(
+    name="Young Adult",
+    description="Books targeted at young adult readers, typically between 12 and 18 years old."
+)
+category3 = Category(
+    name="Adult",
+    description="Books intended for adult readers, with mature themes and complex storylines."
+)
+category4 = Category(
+    name="Classic",
+    description="Books that are considered exemplary or noteworthy, often studied in literature classes."
+)
+category5 = Category(
+    name="Fantasy",
+    description="Books that contain magical elements or are set in imaginary worlds."
+)
+category6 = Category(
+    name="Science Fiction",
+    description="Books that explore futuristic or scientific concepts and technology."
+)
+category7 = Category(
+    name="Romance",
+    description="Books that focus on romantic relationships as their central theme."
+)
+category8 = Category(
+    name="Horror",
+    description="Books designed to create a sense of fear, suspense, and shock in the reader."
+)
+category9 = Category(
+    name="Historical Fiction",
+    description="Books that are set in a specific historical time period and often include historical events."
+)
+category10 = Category(
+    name="Mystery",
+    description="Books that involve a detective or investigator solving a crime or puzzle."
+)
+category11 = Category(
+    name="Adventure",
+    description="Books with exciting and often dangerous journeys or quests."
+)
+
 # example authors
 author1 = Author(
     name = "Charles Dickens",
@@ -238,6 +284,19 @@ session.add(book18)
 session.add(book19)
 session.add(book20)
 
+# Categories
+session.add(category1)
+session.add(category2)
+session.add(category3)
+session.add(category4)
+session.add(category5)
+session.add(category6)
+session.add(category7)
+session.add(category8)
+session.add(category9)
+session.add(category10)
+session.add(category11)
+
 # Inventory
 inventory1 = Inventory(book=book1, quantity_in_stock=10, price=12.99)
 inventory2 = Inventory(book=book2, quantity_in_stock=5, price=14.99)
@@ -303,5 +362,77 @@ book17.authors.append(author3) # Dracula by Bram Stoker
 book18.authors.append(author4) # The Road by Cormac McCarthy
 book19.authors.append(author3) # The Shining by Stephen King
 book20.authors.append(author5) # The Alchemist by Paulo Coelho
+
+# Assign categories to books
+book1.categories.append(category5)  # The Hobbit - Fantasy
+book1.categories.append(category9)  # The Hobbit - Adventure
+book1.categories.append(category1)  # The Hobbit - Kids
+
+book2.categories.append(category5)  # Harry Potter - Fantasy
+book2.categories.append(category2)  # Harry Potter - Young Adult
+book2.categories.append(category7)  # Harry Potter - Romance
+
+book3.categories.append(category7)  # Pride and Prejudice - Romance
+book3.categories.append(category4)  # Pride and Prejudice - Classic
+
+book4.categories.append(category10)  # Murder on the Orient Express - Mystery
+book4.categories.append(category3)  # Murder on the Orient Express - Adult
+
+book5.categories.append(category7)  # Great Expectations - Romance
+book5.categories.append(category4)  # Great Expectations - Classic
+
+book6.categories.append(category6)  # 1984 - Science Fiction
+book6.categories.append(category3)  # 1984 - Adult
+book6.categories.append(category4)  # 1984 - Classic
+
+book7.categories.append(category5)  # The Lord of the Rings - Fantasy
+book7.categories.append(category9)  # The Lord of the Rings - Adventure
+book7.categories.append(category1)  # The Lord of the Rings - Kids
+
+book8.categories.append(category7)  # To Kill a Mockingbird - Romance
+book8.categories.append(category3)  # To Kill a Mockingbird - Adult
+book8.categories.append(category4)  # To Kill a Mockingbird - Classic
+
+book9.categories.append(category3)  # The Catcher in the Rye - Adult
+book9.categories.append(category4)  # The Catcher in the Rye - Classic
+
+book10.categories.append(category3)  # The Great Gatsby - Adult
+book10.categories.append(category4)  # The Great Gatsby - Classic
+
+book11.categories.append(category5)  # The Chronicles of Narnia - Fantasy
+book11.categories.append(category9)  # The Chronicles of Narnia - Adventure
+book11.categories.append(category1)  # The Chronicles of Narnia - Kids
+
+book12.categories.append(category4)  # Wuthering Heights - Classic
+book12.categories.append(category3)  # Wuthering Heights - Adult
+book12.categories.append(category7)  # Wuthering Heights - Romance
+
+book13.categories.append(category6)  # Brave New World - Science Fiction
+book13.categories.append(category3)  # Brave New World - Adult
+
+book14.categories.append(category7)  # The Picture of Dorian Gray - Romance
+book14.categories.append(category3)  # The Picture of Dorian Gray - Adult
+book14.categories.append(category4)  # The Picture of Dorian Gray - Classic
+
+book15.categories.append(category4)  # The Odyssey - Classic
+book15.categories.append(category9)  # The Odyssey - Adventure
+
+book16.categories.append(category4)  # Frankenstein - Classic
+book16.categories.append(category6)  # Frankenstein - Science Fiction
+book16.categories.append(category3)  # Frankenstein - Adult
+
+book17.categories.append(category8)  # Dracula - Horror
+book17.categories.append(category3)  # Dracula - Adult
+
+book18.categories.append(category8)  # The Road - Horror
+book18.categories.append(category3)  # The Road - Adult
+book18.categories.append(category6)  # The Road - Science Fiction
+
+book19.categories.append(category8)  # The Shining - Horror
+book19.categories.append(category3)  # The Shining - Adult
+
+book20.categories.append(category9)  # The Alchemist - Adventure
+book20.categories.append(category1)  # The Alchemist - Kids
+book20.categories.append(category7)  # The Alchemist - Romance
 
 session.commit()
