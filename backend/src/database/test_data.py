@@ -282,4 +282,26 @@ session.add(Inventory18)
 session.add(Inventory19)
 session.add(Inventory20)
 
+# Associate authors with books
+book1.authors.append(author1)  # The Hobbit by J.R.R. Tolkien, associating it with Author1
+book2.authors.append(author7)  # Harry Potter and the Philosopher's Stone by J.K. Rowling
+book3.authors.append(author2)  # Pride and Prejudice by Jane Austen
+book4.authors.append(author10) # Murder on the Orient Express by Agatha Christie
+book5.authors.append(author1)  # Great Expectations by Charles Dickens
+book6.authors.append(author4)  # 1984 by George Orwell
+book7.authors.append(author1)  # The Lord of the Rings by J.R.R. Tolkien
+book8.authors.append(author10) # To Kill a Mockingbird by Harper Lee
+book9.authors.append(author8)  # The Catcher in the Rye by J.D. Salinger
+book10.authors.append(author6) # The Great Gatsby by F. Scott Fitzgerald
+book11.authors.append(author1) # The Chronicles of Narnia by C.S. Lewis
+book12.authors.append(author2) # Wuthering Heights by Emily Brontë
+book13.authors.append(author4) # Brave New World by Aldous Huxley
+book14.authors.append(author3) # The Picture of Dorian Gray by Oscar Wilde
+book15.authors.append(author2) # The Odyssey by Homer
+book16.authors.append(author2) # Frankenstein by Mary Shelley
+book17.authors.append(author3) # Dracula by Bram Stoker
+book18.authors.append(author4) # The Road by Cormac McCarthy
+book19.authors.append(author3) # The Shining by Stephen King
+book20.authors.append(author5) # The Alchemist by Paulo Coelho
+
 session.commit()
