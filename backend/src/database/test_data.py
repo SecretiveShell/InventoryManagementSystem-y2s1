@@ -1,8 +1,9 @@
+from datetime import date
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy_utils import create_database, drop_database
 from URI import DATABASE_URI
-from ORM import Base, Book, Category, Inventory, Author
+from ORM import Base, Book, Category, Inventory, Author, User
 
 engine = create_engine(DATABASE_URI)
 
@@ -162,6 +163,46 @@ book20 = Book(
     publisher="HarperCollins",
 )
 
+user1 = User(
+    name="John Doe",
+    email="john.doe@example.com",
+    password="password123",
+    address="123 Main St, Anytown, USA",
+    phone_number="555-1234",
+    date_joined=date(2020, 1, 1),
+    is_admin=False,
+)
+
+user2 = User(
+    name="Jane Smith",
+    email="jane.smith@example.com",
+    password="password456",
+    address="456 Elm St, Othertown, USA",
+    phone_number="555-5678",
+    date_joined=date(2021, 2, 15),
+    is_admin=True,
+)
+
+user3 = User(
+    name="Alice Johnson",
+    email="alice.johnson@example.com",
+    password="password789",
+    address="789 Oak St, Sometown, USA",
+    phone_number="555-9012",
+    date_joined=date(2019, 5, 20),
+    is_admin=False,
+)
+
+user4 = User(
+    name="Bob Brown",
+    email="bob.brown@example.com",
+    password="password321",
+    address="321 Pine St, Anycity, USA",
+    phone_number="555-3456",
+    date_joined=date(2018, 7, 10),
+    is_admin=False,
+)
+
 # Add new categories to the database
 category1 = Category(
     name="Kids",
@@ -257,6 +298,12 @@ session.add(author7)
 session.add(author8)
 session.add(author9)
 session.add(author10)
+
+# add the users to the database
+session.add(user1)
+session.add(user2)
+session.add(user3)
+session.add(user4)
 
 # add the books to the database
 session.add(book1)
