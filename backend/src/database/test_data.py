@@ -165,89 +165,85 @@ book20 = Book(
 # Add new categories to the database
 category1 = Category(
     name="Kids",
-    description="Books suitable for children, often with simple themes and illustrations."
+    description="Books suitable for children, often with simple themes and illustrations.",
 )
 category2 = Category(
     name="Young Adult",
-    description="Books targeted at young adult readers, typically between 12 and 18 years old."
+    description="Books targeted at young adult readers, typically between 12 and 18 years old.",
 )
 category3 = Category(
     name="Adult",
-    description="Books intended for adult readers, with mature themes and complex storylines."
+    description="Books intended for adult readers, with mature themes and complex storylines.",
 )
 category4 = Category(
     name="Classic",
-    description="Books that are considered exemplary or noteworthy, often studied in literature classes."
+    description="Books that are considered exemplary or noteworthy, often studied in literature classes.",
 )
 category5 = Category(
     name="Fantasy",
-    description="Books that contain magical elements or are set in imaginary worlds."
+    description="Books that contain magical elements or are set in imaginary worlds.",
 )
 category6 = Category(
     name="Science Fiction",
-    description="Books that explore futuristic or scientific concepts and technology."
+    description="Books that explore futuristic or scientific concepts and technology.",
 )
 category7 = Category(
     name="Romance",
-    description="Books that focus on romantic relationships as their central theme."
+    description="Books that focus on romantic relationships as their central theme.",
 )
 category8 = Category(
     name="Horror",
-    description="Books designed to create a sense of fear, suspense, and shock in the reader."
+    description="Books designed to create a sense of fear, suspense, and shock in the reader.",
 )
 category9 = Category(
     name="Historical Fiction",
-    description="Books that are set in a specific historical time period and often include historical events."
+    description="Books that are set in a specific historical time period and often include historical events.",
 )
 category10 = Category(
     name="Mystery",
-    description="Books that involve a detective or investigator solving a crime or puzzle."
+    description="Books that involve a detective or investigator solving a crime or puzzle.",
 )
 category11 = Category(
     name="Adventure",
-    description="Books with exciting and often dangerous journeys or quests."
+    description="Books with exciting and often dangerous journeys or quests.",
 )
 
 # example authors
-author1 = Author(
-    name = "Charles Dickens",
-    bio = "some guy who wrote books."
-)
+author1 = Author(name="Charles Dickens", bio="some guy who wrote books.")
 author2 = Author(
-    name = "Jane Austen",
-    bio = "Famous for her novels exploring the British landed gentry."
+    name="Jane Austen", bio="Famous for her novels exploring the British landed gentry."
 )
 author3 = Author(
-    name = "Mark Twain",
-    bio = "An American author known for 'The Adventures of Tom Sawyer' and 'Adventures of Huckleberry Finn'."
+    name="Mark Twain",
+    bio="An American author known for 'The Adventures of Tom Sawyer' and 'Adventures of Huckleberry Finn'.",
 )
 author4 = Author(
-    name = "George Orwell",
-    bio = "English writer known for his novels '1984' and 'Animal Farm', focusing on social justice and political themes."
+    name="George Orwell",
+    bio="English writer known for his novels '1984' and 'Animal Farm', focusing on social justice and political themes.",
 )
 author5 = Author(
-    name = "Virginia Woolf",
-    bio = "English author and modernist, best known for 'Mrs. Dalloway' and 'To the Lighthouse'."
+    name="Virginia Woolf",
+    bio="English author and modernist, best known for 'Mrs. Dalloway' and 'To the Lighthouse'.",
 )
 author6 = Author(
-    name = "F. Scott Fitzgerald",
-    bio = "American novelist best known for 'The Great Gatsby', exploring themes of decadence and the American Dream."
+    name="F. Scott Fitzgerald",
+    bio="American novelist best known for 'The Great Gatsby', exploring themes of decadence and the American Dream.",
 )
 author7 = Author(
-    name = "J.K. Rowling",
-    bio = "British author famous for creating the Harry Potter series."
+    name="J.K. Rowling",
+    bio="British author famous for creating the Harry Potter series.",
 )
 author8 = Author(
-    name = "Hemingway",
-    bio = "American novelist known for his terse writing style and works like 'The Old Man and the Sea' and 'A Farewell to Arms'."
+    name="Hemingway",
+    bio="American novelist known for his terse writing style and works like 'The Old Man and the Sea' and 'A Farewell to Arms'.",
 )
 author9 = Author(
-    name = "Leo Tolstoy",
-    bio = "Russian author of 'War and Peace' and 'Anna Karenina', focusing on philosophical and social issues."
+    name="Leo Tolstoy",
+    bio="Russian author of 'War and Peace' and 'Anna Karenina', focusing on philosophical and social issues.",
 )
 author10 = Author(
-    name = "Harper Lee",
-    bio = "American author of 'To Kill a Mockingbird', a novel on racial injustice in the Southern United States."
+    name="Harper Lee",
+    bio="American author of 'To Kill a Mockingbird', a novel on racial injustice in the Southern United States.",
 )
 
 # add the authors to the database
@@ -342,26 +338,30 @@ session.add(Inventory19)
 session.add(Inventory20)
 
 # Associate authors with books
-book1.authors.append(author1)  # The Hobbit by J.R.R. Tolkien, associating it with Author1
-book2.authors.append(author7)  # Harry Potter and the Philosopher's Stone by J.K. Rowling
+book1.authors.append(
+    author1
+)  # The Hobbit by J.R.R. Tolkien, associating it with Author1
+book2.authors.append(
+    author7
+)  # Harry Potter and the Philosopher's Stone by J.K. Rowling
 book3.authors.append(author2)  # Pride and Prejudice by Jane Austen
-book4.authors.append(author10) # Murder on the Orient Express by Agatha Christie
+book4.authors.append(author10)  # Murder on the Orient Express by Agatha Christie
 book5.authors.append(author1)  # Great Expectations by Charles Dickens
 book6.authors.append(author4)  # 1984 by George Orwell
 book7.authors.append(author1)  # The Lord of the Rings by J.R.R. Tolkien
-book8.authors.append(author10) # To Kill a Mockingbird by Harper Lee
+book8.authors.append(author10)  # To Kill a Mockingbird by Harper Lee
 book9.authors.append(author8)  # The Catcher in the Rye by J.D. Salinger
-book10.authors.append(author6) # The Great Gatsby by F. Scott Fitzgerald
-book11.authors.append(author1) # The Chronicles of Narnia by C.S. Lewis
-book12.authors.append(author2) # Wuthering Heights by Emily Brontë
-book13.authors.append(author4) # Brave New World by Aldous Huxley
-book14.authors.append(author3) # The Picture of Dorian Gray by Oscar Wilde
-book15.authors.append(author2) # The Odyssey by Homer
-book16.authors.append(author2) # Frankenstein by Mary Shelley
-book17.authors.append(author3) # Dracula by Bram Stoker
-book18.authors.append(author4) # The Road by Cormac McCarthy
-book19.authors.append(author3) # The Shining by Stephen King
-book20.authors.append(author5) # The Alchemist by Paulo Coelho
+book10.authors.append(author6)  # The Great Gatsby by F. Scott Fitzgerald
+book11.authors.append(author1)  # The Chronicles of Narnia by C.S. Lewis
+book12.authors.append(author2)  # Wuthering Heights by Emily Brontë
+book13.authors.append(author4)  # Brave New World by Aldous Huxley
+book14.authors.append(author3)  # The Picture of Dorian Gray by Oscar Wilde
+book15.authors.append(author2)  # The Odyssey by Homer
+book16.authors.append(author2)  # Frankenstein by Mary Shelley
+book17.authors.append(author3)  # Dracula by Bram Stoker
+book18.authors.append(author4)  # The Road by Cormac McCarthy
+book19.authors.append(author3)  # The Shining by Stephen King
+book20.authors.append(author5)  # The Alchemist by Paulo Coelho
 
 # Assign categories to books
 book1.categories.append(category5)  # The Hobbit - Fantasy

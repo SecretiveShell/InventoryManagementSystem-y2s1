@@ -37,13 +37,13 @@ async def view_inventory(
     with Session() as session:
         # Count total books
         total_books = session.query(func.count(Book.book_id)).scalar()
-        
+
         # Calculate total pages
         total_pages = (total_books + page_size - 1) // page_size
-        
+
         # Calculate offset
         offset = (page - 1) * page_size
-        
+
         # Retrieve books with their inventory information
         books = (
             session.query(Book, Inventory)
@@ -52,32 +52,34 @@ async def view_inventory(
             .limit(page_size)
             .all()
         )
-        
+
         # Convert to BookInstance with inventory and author data
         book_instances = []
         for book, inventory in books:
-            book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+            book_dict = BookInstance.model_validate(
+                book, from_attributes=True
+            ).model_dump()
             book_dict["quantity_in_stock"] = inventory.quantity_in_stock
             book_dict["price"] = inventory.price
-            
+
             # Add author information
             authors = []
             for author in book.authors:
                 author_info = {
                     "author_id": author.author_id,
                     "name": author.name,
-                    "bio": author.bio
+                    "bio": author.bio,
                 }
                 authors.append(author_info)
             book_dict["authors"] = authors
-            
+
             book_instances.append(BookInstance(**book_dict))
-        
+
         return {
             "books": book_instances,
             "total_books": total_books,
             "current_page": page,
-            "total_pages": total_pages
+            "total_pages": total_pages,
         }
 
 
@@ -103,28 +105,28 @@ async def view_inventory_for_book(book_id: int) -> BookInstance:
             .filter(Book.book_id == book_id)
             .first()
         )
-        
+
         if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-            
+
         book, inventory = result
-        
+
         # Create book dictionary with inventory data
         book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
         book_dict["quantity_in_stock"] = inventory.quantity_in_stock
         book_dict["price"] = inventory.price
-        
+
         # Add author information
         authors = []
         for author in book.authors:
             author_info = {
                 "author_id": author.author_id,
                 "name": author.name,
-                "bio": author.bio
+                "bio": author.bio,
             }
             authors.append(author_info)
         book_dict["authors"] = authors
-        
+
         return BookInstance(**book_dict)
 
 
@@ -135,9 +137,7 @@ class InventoryUpdate(BaseModel):
 
 @router.post("/{book_id}")
 async def add_to_inventory(
-    user: get_admin_depends, 
-    book_id: int,
-    inventory_data: InventoryUpdate
+    user: get_admin_depends, book_id: int, inventory_data: InventoryUpdate
 ) -> BookInstance:
     """
     Add or update a book in the inventory.
@@ -159,12 +159,14 @@ async def add_to_inventory(
             raise HTTPException(status_code=404, detail="Book not found")
 
         # Get or create inventory entry
-        inventory = session.query(Inventory).filter(Inventory.book_id == book_id).first()
+        inventory = (
+            session.query(Inventory).filter(Inventory.book_id == book_id).first()
+        )
         if inventory is None:
             inventory = Inventory(
                 book_id=book_id,
                 quantity_in_stock=inventory_data.quantity_in_stock or 0,
-                price=inventory_data.price or 0.0
+                price=inventory_data.price or 0.0,
             )
             session.add(inventory)
         else:
@@ -176,23 +178,23 @@ async def add_to_inventory(
 
         session.commit()
         session.refresh(inventory)
-        
+
         # Prepare response
         book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
         book_dict["quantity_in_stock"] = inventory.quantity_in_stock
         book_dict["price"] = inventory.price
-        
+
         # Add author information
         authors = []
         for author in book.authors:
             author_info = {
                 "author_id": author.author_id,
                 "name": author.name,
-                "bio": author.bio
+                "bio": author.bio,
             }
             authors.append(author_info)
         book_dict["authors"] = authors
-        
+
         return BookInstance(**book_dict)
 
 
@@ -218,40 +220,38 @@ async def remove_from_inventory(user: get_admin_depends, book_id: int) -> BookIn
             .filter(Book.book_id == book_id)
             .first()
         )
-        
+
         if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-            
+
         book, inventory = result
-        
+
         # Create response before deletion
         book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
         book_dict["quantity_in_stock"] = inventory.quantity_in_stock
         book_dict["price"] = inventory.price
-        
+
         # Add author information
         authors = []
         for author in book.authors:
             author_info = {
                 "author_id": author.author_id,
                 "name": author.name,
-                "bio": author.bio
+                "bio": author.bio,
             }
             authors.append(author_info)
         book_dict["authors"] = authors
-        
+
         # Remove from inventory
         session.delete(inventory)
         session.commit()
-        
+
         return BookInstance(**book_dict)
 
 
 @router.put("/{book_id}")
 async def update_inventory(
-    user: get_admin_depends,
-    book_id: int,
-    inventory_data: InventoryUpdate
+    user: get_admin_depends, book_id: int, inventory_data: InventoryUpdate
 ) -> BookInstance:
     """
     Update the inventory details for a specific book.
@@ -274,35 +274,35 @@ async def update_inventory(
             .filter(Book.book_id == book_id)
             .first()
         )
-        
+
         if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-            
+
         book, inventory = result
-        
+
         # Update inventory fields
         if inventory_data.quantity_in_stock is not None:
             inventory.quantity_in_stock = inventory_data.quantity_in_stock
         if inventory_data.price is not None:
             inventory.price = inventory_data.price
-            
+
         session.commit()
         session.refresh(inventory)
-        
+
         # Prepare response
         book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
         book_dict["quantity_in_stock"] = inventory.quantity_in_stock
         book_dict["price"] = inventory.price
-        
+
         # Add author information
         authors = []
         for author in book.authors:
             author_info = {
                 "author_id": author.author_id,
                 "name": author.name,
-                "bio": author.bio
+                "bio": author.bio,
             }
             authors.append(author_info)
         book_dict["authors"] = authors
-        
+
         return BookInstance(**book_dict)
