@@ -40,10 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return [];
         }
     }
-  
+    
     function populateBookTable(books) {
         bookTableBody.innerHTML = '';
         books.forEach(book => {
+            const authorNames = book.authors.map(author => author.name).join(', ');
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${book.ISBN}</td>
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${book.quantity_in_stock}</td>
                 <td>£${book.price}</td>
                 <td>${book.location}</td>
-                <td>${book.author}</td>
+                <td>${authorNames}</td>
                 <td><button class="edit-btn" data-book="${encodeURIComponent(JSON.stringify(book))}">Edit</button></td>
                 <td><button class="add-to-basket-btn" data-book="${encodeURIComponent(JSON.stringify(book))}">Add to Basket</button></td>
             `;

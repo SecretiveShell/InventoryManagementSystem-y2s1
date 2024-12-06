@@ -1,15 +1,19 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import func
 from database.session import Session
-from database.ORM import Book, Inventory  # Added Inventory import
-from models.book import BookInstance
+from database.ORM import Book, Inventory, Author
+from models.book import BookInstance, BookCreate
 from auth.login import get_admin_depends
 from openapi_tags import OpenAPITags
+from typing import Optional
+from pydantic import BaseModel
+
 
 router = APIRouter(
     prefix="/inventory",
     tags=[OpenAPITags.inventory.value],
 )
+
 
 @router.get("/list")
 async def view_inventory(
@@ -49,12 +53,24 @@ async def view_inventory(
             .all()
         )
         
-        # Convert to BookInstance with inventory data
+        # Convert to BookInstance with inventory and author data
         book_instances = []
         for book, inventory in books:
             book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
             book_dict["quantity_in_stock"] = inventory.quantity_in_stock
             book_dict["price"] = inventory.price
+            
+            # Add author information
+            authors = []
+            for author in book.authors:
+                author_info = {
+                    "author_id": author.author_id,
+                    "name": author.name,
+                    "bio": author.bio
+                }
+                authors.append(author_info)
+            book_dict["authors"] = authors
+            
             book_instances.append(BookInstance(**book_dict))
         
         return {
@@ -63,6 +79,7 @@ async def view_inventory(
             "current_page": page,
             "total_pages": total_pages
         }
+
 
 @router.get("/{book_id}")
 async def view_inventory_for_book(book_id: int) -> BookInstance:
@@ -79,33 +96,104 @@ async def view_inventory_for_book(book_id: int) -> BookInstance:
         HTTPException: If the book with the specified ID is not found.
     """
     with Session() as session:
-        book = session.query(Book).filter(Book.book_id == book_id).first()
-        if book is None:
+        # Query book with inventory information
+        result = (
+            session.query(Book, Inventory)
+            .join(Inventory)
+            .filter(Book.book_id == book_id)
+            .first()
+        )
+        
+        if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-        return BookInstance.model_validate(book, from_attributes=True)
+            
+        book, inventory = result
+        
+        # Create book dictionary with inventory data
+        book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+        book_dict["quantity_in_stock"] = inventory.quantity_in_stock
+        book_dict["price"] = inventory.price
+        
+        # Add author information
+        authors = []
+        for author in book.authors:
+            author_info = {
+                "author_id": author.author_id,
+                "name": author.name,
+                "bio": author.bio
+            }
+            authors.append(author_info)
+        book_dict["authors"] = authors
+        
+        return BookInstance(**book_dict)
+
+
+class InventoryUpdate(BaseModel):
+    quantity_in_stock: Optional[int] = None
+    price: Optional[float] = None
 
 
 @router.post("/{book_id}")
-async def add_to_inventory(user: get_admin_depends, book_id: int) -> BookInstance:
+async def add_to_inventory(
+    user: get_admin_depends, 
+    book_id: int,
+    inventory_data: InventoryUpdate
+) -> BookInstance:
     """
-    Add a book to the inventory.
+    Add or update a book in the inventory.
 
     Args:
-        book_id (int): The ID of the book to add. Note: The book ID should be autoincrementing in the database.
+        book_id (int): The ID of the book to add/update
+        inventory_data (InventoryUpdate): The inventory data to update
 
     Returns:
-        BookInstance: A BookInstance object representing the book that was added to the inventory.
+        BookInstance: A BookInstance object representing the book that was added/updated in the inventory.
 
     Raises:
         HTTPException: If the book with the specified ID is not found.
     """
     with Session() as session:
+        # Check if book exists
         book = session.query(Book).filter(Book.book_id == book_id).first()
         if book is None:
             raise HTTPException(status_code=404, detail="Book not found")
-        session.add(book)
+
+        # Get or create inventory entry
+        inventory = session.query(Inventory).filter(Inventory.book_id == book_id).first()
+        if inventory is None:
+            inventory = Inventory(
+                book_id=book_id,
+                quantity_in_stock=inventory_data.quantity_in_stock or 0,
+                price=inventory_data.price or 0.0
+            )
+            session.add(inventory)
+        else:
+            # Update existing inventory
+            if inventory_data.quantity_in_stock is not None:
+                inventory.quantity_in_stock = inventory_data.quantity_in_stock
+            if inventory_data.price is not None:
+                inventory.price = inventory_data.price
+
         session.commit()
-        return BookInstance.model_validate(book, from_attributes=True)
+        session.refresh(inventory)
+        
+        # Prepare response
+        book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+        book_dict["quantity_in_stock"] = inventory.quantity_in_stock
+        book_dict["price"] = inventory.price
+        
+        # Add author information
+        authors = []
+        for author in book.authors:
+            author_info = {
+                "author_id": author.author_id,
+                "name": author.name,
+                "bio": author.bio
+            }
+            authors.append(author_info)
+        book_dict["authors"] = authors
+        
+        return BookInstance(**book_dict)
 
 
 @router.delete("/{book_id}")
@@ -123,24 +211,54 @@ async def remove_from_inventory(user: get_admin_depends, book_id: int) -> BookIn
         HTTPException: If the book with the specified ID is not found.
     """
     with Session() as session:
-        book = session.query(Book).filter(Book.book_id == book_id).first()
-        if book is None:
+        # Query both book and inventory
+        result = (
+            session.query(Book, Inventory)
+            .join(Inventory)
+            .filter(Book.book_id == book_id)
+            .first()
+        )
+        
+        if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-        session.delete(book)
+            
+        book, inventory = result
+        
+        # Create response before deletion
+        book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+        book_dict["quantity_in_stock"] = inventory.quantity_in_stock
+        book_dict["price"] = inventory.price
+        
+        # Add author information
+        authors = []
+        for author in book.authors:
+            author_info = {
+                "author_id": author.author_id,
+                "name": author.name,
+                "bio": author.bio
+            }
+            authors.append(author_info)
+        book_dict["authors"] = authors
+        
+        # Remove from inventory
+        session.delete(inventory)
         session.commit()
-        return BookInstance.model_validate(book, from_attributes=True)
+        
+        return BookInstance(**book_dict)
 
 
 @router.put("/{book_id}")
 async def update_inventory(
-    user: get_admin_depends, book_id: int, book_data: BookInstance
+    user: get_admin_depends,
+    book_id: int,
+    inventory_data: InventoryUpdate
 ) -> BookInstance:
     """
     Update the inventory details for a specific book.
 
     Args:
         book_id (int): The ID of the book to update.
-        book_data (BookInstance): The updated book data.
+        inventory_data (InventoryUpdate): The updated inventory data.
 
     Returns:
         BookInstance: A BookInstance object representing the book that was updated in the inventory.
@@ -149,10 +267,42 @@ async def update_inventory(
         HTTPException: If the book with the specified ID is not found.
     """
     with Session() as session:
-        book = session.query(Book).filter(Book.book_id == book_id).first()
-        if book is None:
+        # Query both book and inventory
+        result = (
+            session.query(Book, Inventory)
+            .join(Inventory)
+            .filter(Book.book_id == book_id)
+            .first()
+        )
+        
+        if result is None:
             raise HTTPException(status_code=404, detail="Book not found")
-        for key, value in book_data.model_dump().items():
-            setattr(book, key, value)
+            
+        book, inventory = result
+        
+        # Update inventory fields
+        if inventory_data.quantity_in_stock is not None:
+            inventory.quantity_in_stock = inventory_data.quantity_in_stock
+        if inventory_data.price is not None:
+            inventory.price = inventory_data.price
+            
         session.commit()
-        return BookInstance.model_validate(book, from_attributes=True)
+        session.refresh(inventory)
+        
+        # Prepare response
+        book_dict = BookInstance.model_validate(book, from_attributes=True).model_dump()
+        book_dict["quantity_in_stock"] = inventory.quantity_in_stock
+        book_dict["price"] = inventory.price
+        
+        # Add author information
+        authors = []
+        for author in book.authors:
+            author_info = {
+                "author_id": author.author_id,
+                "name": author.name,
+                "bio": author.bio
+            }
+            authors.append(author_info)
+        book_dict["authors"] = authors
+        
+        return BookInstance(**book_dict)
