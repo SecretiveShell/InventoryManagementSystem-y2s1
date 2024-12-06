@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <td>${item.isbn}</td>
               <td>${item.title}</td>
               <td>£${item.price}</td>
+              <td>£${item.price * item.quantity}</td>
               <td>
                   <button class="qty-btn" data-action="decrease" data-index="${index}">-</button>
                   <span>${item.quantity || 1}</span>
