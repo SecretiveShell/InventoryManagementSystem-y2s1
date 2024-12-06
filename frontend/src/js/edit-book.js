@@ -37,3 +37,37 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "inventory.html";
   });
 });
+
+function initializeNavigation() {
+  document.querySelectorAll('nav button').forEach(button => {
+      button.addEventListener('click', (e) => {
+          const buttonText = e.target.textContent.toLowerCase().trim();
+          switch(buttonText) {
+              case 'browse':
+                  window.location.href = 'inventory.html';
+                  break;
+              case 'cart':
+                  window.location.href = 'cartview.html';
+                  break;
+              case 'my account':
+                  window.location.href = 'myaccount.html';
+                  break;
+              case 'log out':
+                  handleLogout();
+                  break;
+          }
+      });
+  });
+}
+
+function handleLogout() {
+  // Clear any user session data
+  localStorage.clear();
+  // Redirect to login page
+  window.location.href = 'login.html';
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize navigation
+  initializeNavigation();
+});
