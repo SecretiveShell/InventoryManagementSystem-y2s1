@@ -16,7 +16,11 @@ router = APIRouter(
 
 @router.post("/login")
 async def login(login: LoginRequest) -> LoginResponse:
-    # TODO: Implement login functionality
+    """
+    login to the system
+    
+    returns a token if the login is successful
+    """
 
     with Session() as session:
         user = session.query(User).filter(User.email == login.email).first()
@@ -36,4 +40,8 @@ async def login(login: LoginRequest) -> LoginResponse:
 async def logout(
     success: Annotated[Literal[True], Depends(delete_session)],
 ) -> Literal[True]:
+    """
+    logout from the system
+    """
+
     return success
