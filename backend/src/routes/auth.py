@@ -7,6 +7,7 @@ from database.ORM import User
 from models.auth import LoginRequest, LoginResponse
 from database.session import Session
 from openapi_tags import OpenAPITags
+import hashlib
 
 router = APIRouter(
     prefix="/auth",
@@ -27,8 +28,10 @@ async def login(login: LoginRequest) -> LoginResponse:
 
     if user is None:
         return LoginResponse(success=False)
+    
+    hashed = hashlib.blake2b(login.password.encode(), digest_size=64).hexdigest()
 
-    if secrets.compare_digest(str(user.password), login.password):
+    if secrets.compare_digest(str(user.password), str(hashed)):
         model = RedisUserModel.model_validate(user, from_attributes=True)
         token = await create_session(model)
         return LoginResponse(success=True, token=token)
