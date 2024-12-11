@@ -33,6 +33,7 @@ book_author_association = Table(
 # data tables
 class User(Base):
     """SQLAlchemy ORM model for a single user"""
+
     __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True)
@@ -49,6 +50,7 @@ class User(Base):
 
 class Order(Base):
     """SQLAlchemy ORM model for a single order"""
+
     __tablename__ = "orders"
 
     order_id = Column(Integer, primary_key=True)
@@ -65,6 +67,7 @@ class Order(Base):
 
 class Book(Base):
     """SQLAlchemy ORM model for a single book"""
+
     __tablename__ = "books"
 
     book_id = Column(Integer, primary_key=True)
@@ -88,6 +91,7 @@ class Book(Base):
 
 class Inventory(Base):
     """SQLAlchemy ORM model for a single inventory item"""
+
     __tablename__ = "inventory"
 
     inventory_id = Column(Integer, primary_key=True)
@@ -100,6 +104,7 @@ class Inventory(Base):
 
 class Category(Base):
     """SQLAlchemy ORM model for a single category"""
+
     __tablename__ = "categories"
 
     category_id = Column(Integer, primary_key=True)
@@ -113,6 +118,7 @@ class Category(Base):
 
 class Author(Base):
     """SQLAlchemy ORM model for a single author"""
+
     __tablename__ = "authors"
 
     author_id = Column(Integer, primary_key=True)

@@ -19,7 +19,7 @@ router = APIRouter(
 async def login(login: LoginRequest) -> LoginResponse:
     """
     login to the system
-    
+
     returns a token if the login is successful
     """
 
@@ -28,7 +28,7 @@ async def login(login: LoginRequest) -> LoginResponse:
 
     if user is None:
         return LoginResponse(success=False)
-    
+
     hashed = hashlib.blake2b(login.password.encode(), digest_size=64).hexdigest()
 
     if secrets.compare_digest(str(user.password), str(hashed)):

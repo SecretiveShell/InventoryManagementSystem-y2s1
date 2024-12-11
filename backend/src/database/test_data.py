@@ -1,3 +1,4 @@
+import hashlib
 from datetime import date
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -163,7 +164,6 @@ book20 = Book(
     publisher="HarperCollins",
 )
 
-import hashlib
 user1 = User(
     name="John Doe",
     email="john.doe@example.com",
