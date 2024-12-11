@@ -163,10 +163,11 @@ book20 = Book(
     publisher="HarperCollins",
 )
 
+import hashlib
 user1 = User(
     name="John Doe",
     email="john.doe@example.com",
-    password="password123",
+    password=hashlib.blake2b(b"password123", digest_size=64).hexdigest(),
     address="123 Main St, Anytown, USA",
     phone_number="555-1234",
     date_joined=date(2020, 1, 1),
@@ -176,7 +177,7 @@ user1 = User(
 user2 = User(
     name="Jane Smith",
     email="jane.smith@example.com",
-    password="password456",
+    password=hashlib.blake2b(b"password123", digest_size=64).hexdigest(),
     address="456 Elm St, Othertown, USA",
     phone_number="555-5678",
     date_joined=date(2021, 2, 15),
@@ -186,7 +187,7 @@ user2 = User(
 user3 = User(
     name="Alice Johnson",
     email="alice.johnson@example.com",
-    password="password789",
+    password=hashlib.blake2b(b"password123", digest_size=64).hexdigest(),
     address="789 Oak St, Sometown, USA",
     phone_number="555-9012",
     date_joined=date(2019, 5, 20),
