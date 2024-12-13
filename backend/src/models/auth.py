@@ -1,12 +1,12 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class LoginRequest(BaseModel):
-    email: str
-    password: str
+    email: str = Field(..., description="the users email address")
+    password: str = Field(..., description="the users password")
 
 
 class LoginResponse(BaseModel):
-    success: bool
-    token: Optional[str]
+    success: bool = Field(..., description = "did the login succeed")
+    token: Optional[str] = Field(default=None, description="the user session token")
