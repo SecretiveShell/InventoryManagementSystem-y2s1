@@ -9,7 +9,8 @@
 		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers-extra/features/mypy:2": {},
 		"ghcr.io/devcontainers-extra/features/ruff:1": {},
-		"ghcr.io/devcontainers-extra/features/caddy:1": {}
+		"ghcr.io/devcontainers-extra/features/caddy:1": {},
+		"ghcr.io/itsmechlark/features/redis-server:1": {}
 	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
