@@ -1,7 +1,7 @@
 import secrets
 from typing import Annotated, Literal
 from fastapi import APIRouter, Depends
-from auth.login import create_session, delete_session
+from auth.login import create_session, delete_session, get_session_depends
 from auth.redis_user_model import RedisUserModel
 from database.ORM import User
 from models.auth import LoginRequest, LoginResponse
@@ -48,3 +48,11 @@ async def logout(
     """
 
     return success
+
+
+@router.get("/me")
+async def me(user: get_session_depends) -> RedisUserModel:
+    """
+    get the details of the currently logged in user
+    """
+    return user
