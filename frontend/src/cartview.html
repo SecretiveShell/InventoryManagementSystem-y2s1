@@ -6,20 +6,22 @@
     <title>Cart</title>
     <link rel="stylesheet" href="./css/styles.css" />
     
+    <!-- Add this script to check authentication before the page loads -->
+    <script>
+      // Immediate authentication check
+      if (!localStorage.getItem('token')) {
+        window.location.href = 'log-in.html';
+      }
+    </script>
     <script src="./js/cartview.js" defer></script>
   </head>
-  </head>
   <body>
-
-    <body>
-      <nav class="navbar"> 
-        <div>
-          <button>Browse</button>
-        </div>
-      </a>
-
+    <nav class="navbar"> 
       <div>
-          <button>Cart</button>
+        <button>Browse</button>
+      </div>
+      <div>
+        <button>Cart</button>
         <button>My Account</button>
         <button>Log Out</button>
       </div>
@@ -28,23 +30,22 @@
     <!-- Cart Section -->
     <div id="cart-container">
       <table id="cart-table">
-          <thead>
-              <tr>
-                  <th>Book</th>
-                  <th>ISBN</th>
-                  <th>Price</th>
-                  <th>Total Price</th>
-                  <th>Quantity</th>
-                  
-                  <th>Action</th>
-              </tr>
-          </thead>
-          <tbody></tbody>
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th>Total Price<
+            <th>Quantity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
       </table>
       <div class="cart-actions">
-          <button id="clear-cart">Clear Cart</button>
-          <button id="create-invoice">Create Invoice (£0.00)</button>
+        <button id="clear-cart">Clear Cart</button>
+        <button id="create-invoice">Create Invoice (£0.00)</button>
       </div>
-  </div>
-</body>
+    </div>
+  </body>
 </html>

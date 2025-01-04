@@ -1,3 +1,17 @@
+// Authentication check function
+function checkAuth() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+      window.location.href = 'log-in.html';
+      return false;
+  }
+  return true;
+}
+
+// Initial auth check
+if (!checkAuth()) {
+  window.location.href = 'log-in.html';
+}
 document
   .getElementById("changePasswordForm")
   .addEventListener("submit", function (e) {
@@ -97,23 +111,13 @@ document.querySelectorAll("nav button").forEach((button) => {
 // Logout functionality
 async function handleLogout() {
   try {
-    const logoutBtn = document.querySelector('button:contains("Log Out")');
-    if (logoutBtn) {
-      logoutBtn.textContent = "Logging out...";
-      logoutBtn.disabled = true;
-    }
-
-    localStorage.clear();
-    sessionStorage.clear();
-
-    await fetch("/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+      localStorage.clear();
+      sessionStorage.clear();
+      await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
   } catch (error) {
-    console.error("Logout error:", error);
+      console.error('Logout error:', error);
   } finally {
-    window.location.href = "log-in.html";
+      window.location.href = 'log-in.html';
   }
 }
 

@@ -1,6 +1,23 @@
+// Authentication check function
+function checkAuth() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'log-in.html';
+        return false;
+    }
+    return true;
+}
 
+// Initial auth check
+if (!checkAuth()) {
+    window.location.href = 'log-in.html';
+}
+
+// Navigation event listeners
 document.querySelectorAll('nav button').forEach(button => {
     button.addEventListener('click', (e) => {
+        if (!checkAuth()) return;
+        
         const buttonText = e.target.textContent.toLowerCase().trim();
         switch(buttonText) {
             case 'browse': window.location.href = 'inventory.html'; break;
@@ -12,119 +29,112 @@ document.querySelectorAll('nav button').forEach(button => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const cartTable = document.querySelector('#cart-table tbody');
-  const clearCartBtn = document.getElementById('clear-cart');
-  const invoiceBtn = document.getElementById('create-invoice');
+    // Check authentication when DOM loads
+    if (!checkAuth()) return;
 
-  function loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cartTable.innerHTML = '';
-      
-      if (cart.length === 0) {
-          cartTable.innerHTML = '<tr><td colspan="5">Cart is empty</td></tr>';
-          return;
-      }
+    const cartTable = document.querySelector('#cart-table tbody');
+    const clearCartBtn = document.getElementById('clear-cart');
+    const invoiceBtn = document.getElementById('create-invoice');
 
-      cart.forEach((item, index) => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-              <td>${item.isbn}</td>
-              <td>${item.title}</td>
-              <td>£${item.price}</td>
-              <td>£${item.price * item.quantity}</td>
-              <td>
-                  <button class="qty-btn" data-action="decrease" data-index="${index}">-</button>
-                  <span>${item.quantity || 1}</span>
-                  <button class="qty-btn" data-action="increase" data-index="${index}">+</button>
-              </td>
-              <td>
-                  <button class="remove-btn" data-index="${index}">Remove</button>
-              </td>
-          `;
-          cartTable.appendChild(row);
-      });
+    function loadCart() {
+        if (!checkAuth()) return;
+        
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cartTable.innerHTML = '';
+        
+        if (cart.length === 0) {
+            cartTable.innerHTML = '<tr><td colspan="6">Cart is empty</td></tr>';
+            return;
+        }
 
-      updateTotal(cart);
-  }
+        cart.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.title}</td>
+                <td>${item.isbn}</td>
+                <td>£${item.price}</td>
+                <td>£${item.price * item.quantity}</td>
+                <td>
+                    <button class="qty-btn" data-action="decrease" data-index="${index}">-</button>
+                    <span>${item.quantity || 1}</span>
+                    <button class="qty-btn" data-action="increase" data-index="${index}">+</button>
+                </td>
+                <td>
+                    <button class="remove-btn" data-index="${index}">Remove</button>
+                </td>
+            `;
+            cartTable.appendChild(row);
+        });
 
-  function updateTotal(cart) {
-      const total = cart.reduce((sum, item) => 
-          sum + (parseFloat(item.price) * (item.quantity || 1)), 0
-      );
-      invoiceBtn.textContent = `Create Invoice (£${total.toFixed(2)})`;
-  }
+        updateTotal(cart);
+    }
 
-  function updateCart(cart) {
-      localStorage.setItem('cart', JSON.stringify(cart));
-      loadCart();
-  }
+    function updateTotal(cart) {
+        const total = cart.reduce((sum, item) => 
+            sum + (parseFloat(item.price) * (item.quantity || 1)), 0
+        );
+        invoiceBtn.textContent = `Create Invoice (£${total.toFixed(2)})`;
+    }
 
-  document.addEventListener('click', (e) => {
-      if (e.target.matches('.qty-btn')) {
-          const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          const index = parseInt(e.target.dataset.index);
-          const action = e.target.dataset.action;
+    function updateCart(cart) {
+        if (!checkAuth()) return;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+    }
 
-          if (action === 'increase') {
-              cart[index].quantity = (cart[index].quantity || 1) + 1;
-          } else if (action === 'decrease' && cart[index].quantity > 1) {
-              cart[index].quantity--;
-          }
+    // Event delegation for cart actions
+    document.addEventListener('click', (e) => {
+        if (!checkAuth()) return;
 
-          updateCart(cart);
-      }
+        if (e.target.matches('.qty-btn')) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const index = parseInt(e.target.dataset.index);
+            const action = e.target.dataset.action;
 
-      if (e.target.matches('.remove-btn')) {
-          const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          const index = parseInt(e.target.dataset.index);
-          cart.splice(index, 1);
-          updateCart(cart);
-      }
-  });
+            if (action === 'increase') {
+                cart[index].quantity = (cart[index].quantity || 1) + 1;
+            } else if (action === 'decrease' && cart[index].quantity > 1) {
+                cart[index].quantity--;
+            }
 
-  clearCartBtn.addEventListener('click', () => {
-      localStorage.removeItem('cart');
-      loadCart();
-  });
+            updateCart(cart);
+        }
 
-  loadCart();
+        if (e.target.matches('.remove-btn')) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const index = parseInt(e.target.dataset.index);
+            cart.splice(index, 1);
+            updateCart(cart);
+        }
+    });
+
+    clearCartBtn.addEventListener('click', () => {
+        if (!checkAuth()) return;
+        localStorage.removeItem('cart');
+        loadCart();
+    });
+
+    // Add event listener for invoice button
+    invoiceBtn.addEventListener('click', () => {
+        if (!checkAuth()) return;
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            alert('Cannot create invoice for empty cart');
+            return;
+        }
+        // Add your invoice creation logic here
+    });
+
+    // Load cart when page initializes
+    loadCart();
 });
-
-// inventory.js (add to basket functionality)
-function addToCart(book) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const existingItem = cart.find(item => item.isbn === book.isbn);
-  
-  if (existingItem) {
-      existingItem.quantity = (existingItem.quantity || 1) + 1;
-  } else {
-      cart.push({
-          title: book.title,
-          isbn: book.isbn,
-          price: book.price,
-          quantity: 1
-      });
-  }
-  
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
 
 // Logout functionality
 async function handleLogout() {
     try {
-        const logoutBtn = document.querySelector('button:contains("Log Out")');
-        if (logoutBtn) {
-            logoutBtn.textContent = 'Logging out...';
-            logoutBtn.disabled = true;
-        }
-
         localStorage.clear();
         sessionStorage.clear();
-        
-        await fetch('/auth/logout', {
-            method: 'POST',
-            credentials: 'include'
-        });
+        await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
     } catch (error) {
         console.error('Logout error:', error);
     } finally {

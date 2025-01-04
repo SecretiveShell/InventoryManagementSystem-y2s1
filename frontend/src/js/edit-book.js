@@ -1,3 +1,18 @@
+// Authentication check function
+function checkAuth() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+      window.location.href = 'log-in.html';
+      return false;
+  }
+  return true;
+}
+
+// Initial auth check
+if (!checkAuth()) {
+  window.location.href = 'log-in.html';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Retrieve book details from localStorage
   const currentBook = JSON.parse(localStorage.getItem("currentBook"));
@@ -60,13 +75,17 @@ function initializeNavigation() {
   });
 }
 
-function handleLogout() {
-  // Clear any user session data
-  localStorage.clear();
-  // Redirect to login page
-  window.location.href = 'login.html';
+async function handleLogout() {
+  try {
+      localStorage.clear();
+      sessionStorage.clear();
+      await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
+  } catch (error) {
+      console.error('Logout error:', error);
+  } finally {
+      window.location.href = 'log-in.html';
+  }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize navigation
   initializeNavigation();

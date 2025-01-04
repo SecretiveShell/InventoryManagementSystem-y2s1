@@ -1,3 +1,19 @@
+// Authentication check function
+function checkAuth() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'log-in.html';
+        return false;
+    }
+    return true;
+}
+
+// Initial auth check
+if (!checkAuth()) {
+    window.location.href = 'log-in.html';
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const bookTableBody = document.querySelector('#book-table tbody');
     const prevPageBtn = document.getElementById('prev-page');

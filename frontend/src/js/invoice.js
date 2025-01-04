@@ -1,3 +1,18 @@
+// Authentication check function
+function checkAuth() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+      window.location.href = 'log-in.html';
+      return false;
+  }
+  return true;
+}
+
+// Initial auth check
+if (!checkAuth()) {
+  window.location.href = 'log-in.html';
+}
+
 // Function to replace input fields and textareas with their values before printing
 function printInvoice() {
   // Get elements to replace
@@ -58,9 +73,16 @@ button.addEventListener('click', (e) => {
 });
 
 // Define handleLogout function
-function handleLogout() {
-  console.log('Logging out...');
-  window.location.href = 'log-in.html';
+async function handleLogout() {
+  try {
+      localStorage.clear();
+      sessionStorage.clear();
+      await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
+  } catch (error) {
+      console.error('Logout error:', error);
+  } finally {
+      window.location.href = 'log-in.html';
+  }
 }
 
 // Add keydown listener for Ctrl + P
