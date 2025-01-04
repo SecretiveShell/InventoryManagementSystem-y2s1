@@ -251,7 +251,8 @@ async def remove_from_inventory(user: get_admin_depends, book_id: int) -> BookIn
 
 @router.put("/{book_id}")
 async def update_inventory(
-    user: get_admin_depends, book_id: int, inventory_data: InventoryUpdate
+    book_id: int, 
+    inventory_data: InventoryUpdate
 ) -> BookInstance:
     """
     Update the inventory details for a specific book.

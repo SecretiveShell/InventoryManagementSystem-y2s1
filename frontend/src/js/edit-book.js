@@ -1,59 +1,116 @@
-// Authentication check function
-function checkAuth() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-      window.location.href = 'log-in.html';
-      return false;
-  }
-  return true;
-}
+/**
+ * edit-book.js
+ * Handles the editing of book inventory details
+ */
 
-// Initial auth check
-if (!checkAuth()) {
-  window.location.href = 'log-in.html';
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Retrieve book details from localStorage
+document.addEventListener("DOMContentLoaded", async () => {
+  // Get and populate book data
   const currentBook = JSON.parse(localStorage.getItem("currentBook"));
+  console.log('Current book data:', currentBook);
 
-  if (currentBook) {
-    // Populate form fields
-    document.getElementById("isbn").value = currentBook.isbn;
-    document.getElementById("title").value = currentBook.title;
-    document.getElementById("quantity").value = currentBook.quantity.replace(
-      /[^\d]/g,
-      "",
-    );
-    document.getElementById("price").value = currentBook.price;
-    document.getElementById("location").value = currentBook.location;
-    document.getElementById("author").value = currentBook.author;
+  if (!currentBook) {
+      console.error('No book data found in localStorage');
+      alert('Error: Could not load book data');
+      window.location.href = 'inventory.html';
+      return;
   }
 
-  // Form submission handling
-  document.getElementById("edit-book-form").addEventListener("submit", (e) => {
-    e.preventDefault();
+  // Populate form fields
+  document.getElementById("isbn").value = currentBook.ISBN || '';
+  document.getElementById("title").value = currentBook.title || '';
+  document.getElementById("quantity").value = currentBook.quantity_in_stock || '';
+  document.getElementById("price").value = currentBook.price || '';
+  
+  // Handle authors array
+  const authorNames = currentBook.authors ? 
+      currentBook.authors.map(author => author.name).join(', ') : '';
+  document.getElementById("author").value = authorNames;
 
-    // Collect form data
-    const updatedBook = {
-      isbn: document.getElementById("isbn").value,
-      title: document.getElementById("title").value,
-      quantity: document.getElementById("quantity").value,
-      price: document.getElementById("price").value,
-      location: document.getElementById("location").value,
-      author: document.getElementById("author").value,
-    };
+  // Form submission handler
+  const form = document.getElementById("edit-book-form");
+  if (form) {
+      form.addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-    // In a real application, this would send data to backend
-    alert("Changes saved:\n" + JSON.stringify(updatedBook, null, 2));
+          // Disable save button and show loading state
+          const saveButton = document.querySelector('.btn-save');
+          if (saveButton) {
+              saveButton.disabled = true;
+              saveButton.textContent = 'Saving...';
+          }
 
-    // Clear localStorage and return to main page
-    localStorage.removeItem("currentBook");
-    window.location.href = "inventory.html";
-  });
-});
+          try {
+              // Get form inputs
+              const quantityStr = document.getElementById("quantity").value.trim();
+              const priceStr = document.getElementById("price").value.trim();
+              
+              // Validation
+              if (!quantityStr || !priceStr) {
+                  throw new Error('Quantity and price are required');
+              }
+              
+              const quantity = parseInt(quantityStr);
+              const price = parseFloat(priceStr);
+              
+              if (isNaN(quantity) || quantity < 0) {
+                  throw new Error('Quantity must be a valid positive number');
+              }
 
-function initializeNavigation() {
+              if (isNaN(price) || price < 0) {
+                  throw new Error('Price must be a valid positive number');
+              }
+
+              // Prepare update data
+              const inventoryData = {
+                  quantity_in_stock: quantity,
+                  price: Number(price.toFixed(2))
+              };
+
+              console.log('Sending data:', JSON.stringify(inventoryData, null, 2));
+
+              // Send request
+              const response = await fetch(`/api/inventory/${currentBook.book_id}`, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(inventoryData)
+              });
+
+              console.log('Response status:', response.status);
+
+              const responseText = await response.text();
+              console.log('Raw response:', responseText);
+
+              if (!response.ok) {
+                  let errorMessage;
+                  try {
+                      const errorData = JSON.parse(responseText);
+                      errorMessage = errorData.detail || JSON.stringify(errorData);
+                  } catch {
+                      errorMessage = responseText || `Error: ${response.status}`;
+                  }
+                  throw new Error(errorMessage);
+              }
+
+              // Success - return to inventory page
+              localStorage.removeItem("currentBook");
+              window.location.href = "inventory.html";
+
+          } catch (error) {
+              console.error('Error saving book:', error);
+              alert(`Failed to save changes: ${error.message}`);
+              
+              // Reset save button
+              if (saveButton) {
+                  saveButton.disabled = false;
+                  saveButton.textContent = 'Save Changes';
+              }
+          }
+      });
+  }
+
+  // Initialize navigation
   document.querySelectorAll('nav button').forEach(button => {
       button.addEventListener('click', (e) => {
           const buttonText = e.target.textContent.toLowerCase().trim();
@@ -73,20 +130,4 @@ function initializeNavigation() {
           }
       });
   });
-}
-
-async function handleLogout() {
-  try {
-      localStorage.clear();
-      sessionStorage.clear();
-      await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
-  } catch (error) {
-      console.error('Logout error:', error);
-  } finally {
-      window.location.href = 'log-in.html';
-  }
-}
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize navigation
-  initializeNavigation();
 });
