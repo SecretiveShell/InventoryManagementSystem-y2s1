@@ -14,7 +14,6 @@ async def create_session(User: RedisUserModel) -> str:
     json = User.model_dump_json()
 
     async with get_redis_client() as redis:
-        print (token, json)
         await redis.setex(str(token), int(TOKEN_EXPIRE), str(json))
 
     return token
@@ -48,7 +47,7 @@ get_session_depends = Annotated[RedisUserModel, Depends(get_user_from_session)]
 
 # this is a utility function to force a logged in user to be an admin
 async def get_admin(user: get_session_depends) -> RedisUserModel:
-    if user.role != "admin":
+    if user.is_admin:
         raise HTTPException(status_code=403, detail="Not authorized")
     return user
 
