@@ -8,34 +8,35 @@ C4Component
         Person(clerk, "Clerk", "Staff member who manages inventory")
         Person(admin, "Administrator", "System administrator with full access")
         
-        System(SystemAA, "Web Application", "Allows clerk and admin to view and manage inventory and generate invoices")
+        Rel_U(clerk, admin, "Reports to")
         
-        Boundary(b3, "System Boundary", "Core Components") {
+        System_Ext(SystemAA, "Web Application", "Allows clerk and admin to view and manage inventory and generate invoices")
+        
+        Rel_D(clerk, SystemAA, "Uses", "HTTPS")
+        Rel_D(admin, SystemAA, "Administers", "HTTPS")
+        
+        Container_Boundary(b3, "System Boundary", "Core Components") {
             Container(db, "Database", "Stores user, inventory and invoice data", "MySQL")
             
-            SystemQueue(SystemLogin, "Login Controller", "Handles user authentication and session management")
-            SystemQueue(SystemPassReset, "Password Reset Controller", "Manages password recovery process")
-            SystemQueue(SystemInventoryPage, "Inventory Controller", "Manages inventory viewing and searching")
-            SystemQueue(SystemEditInventory, "Product Management Controller", "Handles product creation, editing and removal")
-            SystemQueue(InvoiceGenerate, "Invoice Controller", "Generates and manages order invoices")
-
-            Rel(clerk, SystemAA, "Uses", "HTTPS")
-            Rel(admin, SystemAA, "Administers", "HTTPS")
+            Container_Boundary(controllers, "Controllers Layer") {
+                SystemQueue(SystemLogin, "Login Controller", "Handles user authentication")
+                SystemQueue(SystemPassReset, "Password Reset Controller", "Manages password recovery")
+                SystemQueue(SystemInventoryPage, "Inventory Controller", "Manages inventory")
+                SystemQueue(SystemEditInventory, "Product Management Controller", "Handles products")
+                SystemQueue(InvoiceGenerate, "Invoice Controller", "Manages invoices")
+            }
             
-            Rel(SystemAA, SystemLogin, "Redirects to", "Internal")
-            Rel(SystemLogin, db, "Validates credentials", "SQL")
+            Rel_R(SystemAA, SystemLogin, "Redirects to", "Internal")
+            Rel_R(SystemAA, SystemPassReset, "Redirects to", "Internal")
+            Rel_R(SystemAA, SystemInventoryPage, "Shows", "Internal")
+            Rel_R(SystemAA, SystemEditInventory, "Manages", "Internal")
+            Rel_R(SystemAA, InvoiceGenerate, "Creates", "Internal")
             
-            Rel(SystemAA, SystemPassReset, "Redirects to", "Internal")
-            Rel(SystemPassReset, db, "Updates password", "SQL")
-            
-            Rel(SystemAA, SystemInventoryPage, "Shows", "Internal")
-            Rel(SystemInventoryPage, db, "Queries inventory", "SQL")
-            
-            Rel(SystemAA, SystemEditInventory, "Manages", "Internal")
-            Rel(SystemEditInventory, db, "Updates products", "SQL")
-            
-            Rel(SystemAA, InvoiceGenerate, "Creates", "Internal")
-            Rel(InvoiceGenerate, db, "Stores/retrieves", "SQL")
+            Rel_D(SystemLogin, db, "Validates", "SQL")
+            Rel_D(SystemPassReset, db, "Updates", "SQL")
+            Rel_D(SystemInventoryPage, db, "Queries", "SQL")
+            Rel_D(SystemEditInventory, db, "Updates", "SQL")
+            Rel_D(InvoiceGenerate, db, "Stores/retrieves", "SQL")
         }
     }
 ```
