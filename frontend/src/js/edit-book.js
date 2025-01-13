@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("quantity").value = currentBook.quantity_in_stock || '';
   document.getElementById("price").value = currentBook.price || '';
   
+  
   // Handle authors array
   const authorNames = currentBook.authors ? 
       currentBook.authors.map(author => author.name).join(', ') : '';
