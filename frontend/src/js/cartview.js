@@ -29,12 +29,12 @@ document.querySelectorAll('nav button').forEach(button => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication when DOM loads
     if (!checkAuth()) return;
 
     const cartTable = document.querySelector('#cart-table tbody');
     const clearCartBtn = document.getElementById('clear-cart');
     const invoiceBtn = document.getElementById('create-invoice');
+    const customerForm = document.getElementById('customer-details');
 
     function loadCart() {
         if (!checkAuth()) return;
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${item.title}</td>
                 <td>${item.isbn}</td>
                 <td>£${item.price}</td>
-                <td>£${item.price * item.quantity}</td>
+                <td>£${(item.price * item.quantity).toFixed(2)}</td>
                 <td>
                     <button class="qty-btn" data-action="decrease" data-index="${index}">-</button>
                     <span>${item.quantity || 1}</span>
@@ -74,12 +74,127 @@ document.addEventListener('DOMContentLoaded', () => {
             sum + (parseFloat(item.price) * (item.quantity || 1)), 0
         );
         invoiceBtn.textContent = `Create Invoice (£${total.toFixed(2)})`;
+        return total;
     }
 
     function updateCart(cart) {
         if (!checkAuth()) return;
         localStorage.setItem('cart', JSON.stringify(cart));
         loadCart();
+    }
+
+    function getCustomerDetails() {
+        return {
+            name: document.getElementById('customer-name').value,
+            addressLine1: document.getElementById('address-line1').value,
+            addressLine2: document.getElementById('address-line2').value,
+            city: document.getElementById('city').value,
+            postcode: document.getElementById('postcode').value
+        };
+    }
+
+    function createInvoicePreview(cart, customerDetails, total) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Invoice - Books4Bucks</title>
+                    <style>
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            padding: 20px;
+                            max-width: 800px;
+                            margin: 0 auto;
+                            background-color: #f4f4f4;
+                        }
+                        .invoice-container {
+                            background-color: white;
+                            padding: 40px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        }
+                        .invoice-header { text-align: center; margin-bottom: 30px; }
+                        .customer-details { margin-bottom: 20px; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                        .total { text-align: right; font-weight: bold; margin-top: 20px; }
+                        .no-print button {
+                            background-color: #4caf50;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            margin-top: 20px;
+                        }
+                        .no-print button:hover {
+                            background-color: #45a049;
+                        }
+                        @media print {
+                            body {
+                                background-color: white;
+                                padding: 0;
+                            }
+                            .invoice-container {
+                                box-shadow: none;
+                                padding: 0;
+                            }
+                            .no-print { display: none; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="invoice-container">
+                        <div class="invoice-header">
+                            <h1>Books4Bucks</h1>
+                            <h2>Invoice</h2>
+                        </div>
+                        
+                        <div class="customer-details">
+                            <h3>Bill To:</h3>
+                            <p>${customerDetails.name}</p>
+                            <p>${customerDetails.addressLine1}</p>
+                            ${customerDetails.addressLine2 ? `<p>${customerDetails.addressLine2}</p>` : ''}
+                            <p>${customerDetails.city}</p>
+                            <p>${customerDetails.postcode}</p>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>ISBN</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${cart.map(item => `
+                                    <tr>
+                                        <td>${item.title}</td>
+                                        <td>${item.isbn}</td>
+                                        <td>£${item.price}</td>
+                                        <td>${item.quantity || 1}</td>
+                                        <td>£${(item.price * (item.quantity || 1)).toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <div class="total">
+                            <p>Total: £${total.toFixed(2)}</p>
+                        </div>
+                        
+                        <div class="no-print">
+                            <button onclick="window.print()">Print Invoice</button>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
     }
 
     // Event delegation for cart actions
@@ -114,15 +229,23 @@ document.addEventListener('DOMContentLoaded', () => {
         loadCart();
     });
 
-    // Add event listener for invoice button
     invoiceBtn.addEventListener('click', () => {
         if (!checkAuth()) return;
+        
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         if (cart.length === 0) {
             alert('Cannot create invoice for empty cart');
             return;
         }
-        // Add your invoice creation logic here
+
+        const customerDetails = getCustomerDetails();
+        if (!customerDetails.name || !customerDetails.addressLine1 || !customerDetails.city || !customerDetails.postcode) {
+            alert('Please fill in all required customer details (name, address line 1, city, and postcode)');
+            return;
+        }
+
+        const total = updateTotal(cart);
+        createInvoicePreview(cart, customerDetails, total);
     });
 
     // Load cart when page initializes
